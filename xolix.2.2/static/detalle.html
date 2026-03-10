@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Xolix | Detalle de usuario</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg">
+
+<div class="neo-card full">
+    <h2 class="logo">XOLIX</h2>
+    <div id="loadingUser" class="user-loading">
+    
+    <p class="subtitle">Informacion del Colaborador.</p>
+ </div>
+
+    <div id="contenido" style="display:none;">
+        <div class="detail-grid" id="detalles"></div>
+
+        <div class="btn-row" style="margin-top:20px;">
+            <button class="secondary" onclick="window.location.href='/dashboard'">← Volver</button>
+            <button class="primary" id="btnEditar" style="display:none;" onclick="irEditar()">Editar</button>
+        </div>
+    </div>
+
+    <div id="error" style="display:none; color:#E57373; margin-top:20px;">
+        Usuario no encontrado.
+    </div>
+</div>
+
+<script src="/static/detalle.js"></script>
+</body>
+</html><!DOCTYPE html>
+
+
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Xolix | Detalle de usuario</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg">
+
+<div class="neo-card full">
+    <h2 class="logo">XOLIX</h2>
+    <div class="avatar-placeholder">
+        <svg viewBox="0 0 24 17" width="480" height="480" fill="#9AA3B2">
+            <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+        </svg>
+    </div>
+    <p class="subtitle" id="subtitulo">Foto pendiente de validación.</p>
+
+    <div id="contenido" style="display:none;">
+        <div class="detail-grid" id="detalles"></div>
+
+        <div class="btn-row" style="margin-top:20px;">
+            <button class="secondary" onclick="window.location.href='/dashboard'">← Volver</button>
+            <button class="primary" id="btnEditar" style="display:none;" onclick="irEditar()">Editar</button>
+        </div>
+    </div>
+
+    <div id="error" style="display:none; color:#E57373; margin-top:20px;">
+        Usuario no encontrado.
+    </div>
+</div>
+
+<script src="/static/detalle.js"></script>
+</body>
+</html>
+
+
+
+

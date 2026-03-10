@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Xolix | Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg">
+
+<div class="neo-card">
+    <h2 class="logo">XOLIX</h2>
+    <p class="subtitle">Sistema de Gestión</p>
+
+    <form id="loginForm">
+        <input type="email" id="correo" placeholder="Correo electrónico" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button type="submit" class="neo-btn">Iniciar sesión</button>
+    </form>
+
+    <div id="mensaje" class="mensaje"></div>
+
+    <div class="nav-switch">
+        <a href="/registro">¿No tienes cuenta? Registrarse</a>
+    </div>
+</div>
+
+<script src="/static/login.js"></script>
+</body>
+</html>

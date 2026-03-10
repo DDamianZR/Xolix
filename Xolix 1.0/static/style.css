@@ -1,0 +1,120 @@
+/* =========================
+   GLOBAL
+========================= */
+
+body.bg {
+    background: #E6ECF5;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* =========================
+   CARD NEOMORFISTA
+========================= */
+
+.neo-card {
+    background: #E6ECF5;
+    padding: 40px;
+    border-radius: 20px;
+    width: 340px;
+    text-align: center;
+
+    box-shadow: 
+        8px 8px 16px #C8D0E7,
+        -8px -8px 16px #FFFFFF;
+}
+
+.neo-card h2 {
+    margin-bottom: 5px;
+    color: #6C63FF;
+    letter-spacing: 3px;
+}
+
+.subtitle {
+    color: #8A94A6;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 12px;
+    outline: none;
+    background: #E6ECF5;
+
+    box-shadow:
+        inset 4px 4px 8px #C8D0E7,
+        inset -4px -4px 8px #FFFFFF;
+
+    transition: 0.2s ease;
+}
+
+input:focus {
+    box-shadow:
+        inset 2px 2px 5px #C8D0E7,
+        inset -2px -2px 5px #FFFFFF;
+}
+
+/* =========================
+   BOTÓN PRINCIPAL
+========================= */
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #6C63FF;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+
+    box-shadow:
+        4px 4px 8px #C8D0E7,
+        -4px -4px 8px #FFFFFF;
+}
+
+button:hover {
+    background: #5A54D1;
+    transform: translateY(-2px);
+}
+
+/* =========================
+   MENSAJES
+========================= */
+
+.mensaje {
+    margin-top: 15px;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+/* =========================
+   NAVEGACIÓN
+========================= */
+
+.nav-switch {
+    margin-top: 20px;
+}
+
+.nav-switch a {
+    text-decoration: none;
+    font-size: 13px;
+    color: #6C63FF;
+    transition: 0.2s;
+}
+
+.nav-switch a:hover {
+    opacity: 0.8;
+}

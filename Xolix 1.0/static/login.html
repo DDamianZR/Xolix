@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Xolix | Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="bg">
+
+    <div class="neo-card">
+
+        <h2 class="logo">XOLIX</h2>
+        <p class="subtitle">Sistema de Gestión</p>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <input type="email" id="correo" placeholder="Correo electrónico" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Contraseña" required>
+            </div>
+
+            <button type="submit" class="neo-btn">
+                Iniciar sesión
+            </button>
+
+        </form>
+
+        <div id="mensaje" class="mensaje"></div>
+
+        <div class="nav-switch">
+            <a href="/">¿No tienes cuenta? Registrarse</a>
+        </div>
+
+    </div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const mensaje = document.getElementById("mensaje");
+    mensaje.innerText = "Verificando...";
+    mensaje.style.color = "#6c7a96";
+
+    try {
+        const response = await fetch("/login/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                correo: document.getElementById("correo").value,
+                password: document.getElementById("password").value
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("token", data.access_token);
+            mensaje.innerText = "Login exitoso ✔";
+            mensaje.style.color = "#4CAF50";
+
+            setTimeout(() => {
+                window.location.href = "/dashboard"; // futura página protegida
+            }, 1000);
+
+        } else {
+            mensaje.innerText = data.detail;
+            mensaje.style.color = "#E57373";
+        }
+
+    } catch (error) {
+        mensaje.innerText = "Error de conexión con el servidor";
+        mensaje.style.color = "#E57373";
+    }
+});
+</script>
+
+</body>
+</html>

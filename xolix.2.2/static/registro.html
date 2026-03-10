@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Xolix | Registro</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+    if (!localStorage.getItem("token")) {
+        window.location.href = "/";
+    }
+</script>
+</head>
+<body class="bg">
+
+<div class="neo-card wide">
+    <h2 class="logo">XOLIX</h2>
+    <p class="subtitle">Registro de Personal</p>
+
+    <form id="registroForm">
+        <input type="text" id="nombre" placeholder="Nombre completo" required>
+        <input type="email" id="correo" placeholder="Correo electrónico" required>
+
+        <div class="form-row">
+            <input type="text" id="rfc" placeholder="RFC (13 caracteres)" maxlength="13" required>
+            <input type="text" id="curp" placeholder="CURP (18 caracteres)" maxlength="18" required>
+        </div>
+
+        <div class="form-row">
+            <div class="date-input-wrapper" style="flex:1;">
+                <label style="font-size: 10px; color: #8A94A6; display: block; margin-bottom: 2px;">
+                    FECHA DE NACIMIENTO
+                </label>
+                <input type="date" id="fecha_nacimiento" required>
+            </div>
+            <div class="select-wrapper">
+                <select id="sexo" required>
+                    <option value="" disabled selected>Sexo</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+        </div>
+
+        <input type="text" id="direccion" placeholder="Dirección" required>
+
+        <div class="form-row">
+            <div class="select-wrapper">
+                <select id="tipo_personal" required>
+                    <option value="" disabled selected>Tipo de personal</option>
+                    <option value="empleado">Empleado</option>
+                    <option value="voluntario">Voluntario</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="rol" required>
+                    <option value="" disabled selected>Rol</option>
+                    <option value="director">Director</option>
+                    <option value="coordinador">Coordinador</option>
+                    <option value="psicologo">Psicólogo</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="abogado">Abogado</option>
+                    <option value="trabajador social">Trabajador social</option>
+                    <option value="analista">Analista</option>
+                </select>
+            </div>
+        </div>
+
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <div id="mensaje" class="mensaje"></div>
+
+    <div class="nav-switch">
+        <a href="/">¿Ya tienes cuenta? Iniciar sesión</a>
+    </div>
+</div>
+
+<script src="/static/registro.js"></script>
+</body>
+</html>

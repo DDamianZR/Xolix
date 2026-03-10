@@ -1,0 +1,69 @@
+\<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Xolix | Editar usuario</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg">
+
+<div class="neo-card wide">
+    <h2 class="logo">XOLIX</h2>
+    <p class="subtitle">Modificar datos del personal</p>
+
+    <form id="editarForm" style="display:none;">
+        <input type="text" id="nombre" placeholder="Nombre completo" required>
+        <input type="email" id="correo" placeholder="Correo electrónico" required>
+
+        <div class="form-row">
+            <input type="text" id="rfc" placeholder="RFC" maxlength="13" required>
+            <input type="text" id="curp" placeholder="CURP" maxlength="18" required>
+        </div>
+
+        <div class="form-row">
+            <input type="number" min="18" max="100" id="edad" placeholder="Edad" required>
+            <div class="select-wrapper">
+                <select id="sexo" required>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+        </div>
+
+        <input type="text" id="direccion" placeholder="Dirección" required>
+
+        <div class="form-row">
+            <div class="select-wrapper">
+                <select id="tipo_personal" required>
+                    <option value="empleado">Empleado</option>
+                    <option value="voluntario">Voluntario</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="rol" required>
+                    <option value="director">Director</option>
+                    <option value="coordinador">Coordinador</option>
+                    <option value="psicologo">Psicólogo</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="abogado">Abogado</option>
+                    <option value="trabajador social">Trabajador social</option>
+                    <option value="analista">Analista</option>
+                </select>
+            </div>
+        </div>
+
+        <input type="password" id="password" placeholder="Nueva contraseña (dejar vacío para no cambiar)">
+
+        <div class="btn-row" style="margin-top:4px;">
+            <button type="button" class="secondary" onclick="window.location.href='/dashboard'">Cancelar</button>
+            <button type="submit" class="primary">Guardar cambios</button>
+        </div>
+    </form>
+
+    <div id="cargando" style="text-align:center; padding:20px; color:#8A94A6;">Cargando...</div>
+    <div id="mensaje" class="mensaje"></div>
+</div>
+
+<script src="/static/editar.js"></script>
+</body>
+</html>

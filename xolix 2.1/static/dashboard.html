@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Xolix | Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-dashboard">
+
+<!-- Modal de confirmación de eliminación -->
+<div class="modal-overlay" id="modalEliminar">
+    <div class="modal-box">
+        <h3>¿Eliminar usuario?</h3>
+        <p>Esta acción no se puede deshacer. El registro será eliminado permanentemente.</p>
+        <div class="btn-row">
+            <button class="secondary" onclick="cerrarModal()">Cancelar</button>
+            <button class="btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper">
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <h2 class="logo">XOLIX</h2>
+        <span class="user-info" id="infoRol">Sistema de Gestión</span>
+        <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+
+    <!-- Tabla de usuarios -->
+    <div class="table-container">
+        <div class="table-header">
+            <h3>Personal registrado</h3>
+            <div class="table-controls">
+                <input class="search-box" type="text" id="busqueda" placeholder="Buscar por nombre o correo..." oninput="filtrarTabla()">
+                <button class="btn-add" id="btnAgregar" onclick="window.location.href='/registro'" style="display:none;">+ Agregar personal</button>
+            </div>
+        </div>
+
+        <div id="cargando" class="estado-msg">Cargando...</div>
+
+        <div id="tablaWrap" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaUsuarios"></tbody>
+            </table>
+        </div>
+
+        <div id="sinResultados" class="estado-msg" style="display:none;">
+            No se encontraron usuarios.
+        </div>
+    </div>
+</div>
+
+<script src="/static/dashboard.js"></script>
+</body>
+</html>
