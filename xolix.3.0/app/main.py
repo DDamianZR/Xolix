@@ -1,0 +1,44 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.config import get_settings
+from app.database import engine, Base
+
+# Import ALL models to ensure they are registered
+from app.models.user import User  # noqa: F401
+from app.models.expediente import Expediente, ExpedienteCompartido  # noqa: F401
+from app.models.proceso import Proceso, Subtarea  # noqa: F401
+
+from app.routers import auth, users, sepomex, expedientes, procesos
+
+settings = get_settings()
+
+# Create tables
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title="Proyecto Xolix",
+    description="Sistema de Gestión de Personal",
+    version="3.0.0",
+)
+
+# CORS — allow React dev server
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mount routers
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(sepomex.router)
+app.include_router(expedientes.router)
+app.include_router(procesos.router)
+
+
+@app.get("/api/health")
+def health_check():
+    return {"status": "ok", "version": "3.0.0"}

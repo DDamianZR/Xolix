@@ -1,0 +1,846 @@
+\documentclass[12pt,letterpaper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+% Configuración de colores
+\definecolor{primarycolor}{RGB}{0,51,102}
+\definecolor{secondarycolor}{RGB}{51,102,153}
+
+% Configuración de hipervínculos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primarycolor,
+    filecolor=primarycolor,
+    urlcolor=primarycolor,
+    citecolor=primarycolor
+}
+
+% Configuración de encabezados y pies de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Xolix Systems}
+\fancyhead[R]{\small Propuesta Técnico-Económica}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Configuración de títulos de sección
+\titleformat{\section}
+{\color{primarycolor}\normalfont\Large\bfseries}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\color{secondarycolor}\normalfont\large\bfseries}
+{\thesubsection}{1em}{}
+
+% Inicio del documento
+\begin{document}
+
+% Portada
+\begin{titlepage}
+    \centering
+    \vspace*{0.1cm}
+    
+    % Espacio para logo de la empresa
+    \includegraphics[width=4cm]{logo_xolix.png}
+    
+    \vspace{2cm}
+    
+    {\Huge\bfseries Propuesta Técnico-Económica\par}
+    
+    \vspace{1.5cm}
+    
+    {\LARGE\bfseries Sistema Web de Gestión de Casos y Reportes\par}
+    {\LARGE\bfseries para Fundación Futuro Con Derechos\par}
+    
+    \vspace{2cm}
+    
+    {\Large\textbf{Presentado por:}\par}
+    {\Large Xolix Systems\par}
+    
+    \vspace{1cm}
+    
+    {\large Soluciones Tecnológicas para la Gestión de Información Sensible\par}
+    
+    \vfill
+    
+    {\large Fecha: Febrero 2026}
+    
+\end{titlepage}
+
+% Configuración del estilo de página para el resto del documento
+\setcounter{page}{2}
+
+% Tabla de contenidos
+\tableofcontents
+\newpage
+
+% Sección 1: Presentación de la Empresa
+\section{Presentación de la Empresa}
+
+\subsection{Xolix Systems}
+
+Xolix Systems es una consultora tecnológica especializada en el desarrollo de soluciones de software seguras para la gestión de información sensible. Fundada con el propósito de brindar servicios tecnológicos de alta calidad, nuestra empresa se distingue por su compromiso con la seguridad, la confidencialidad y la innovación en cada proyecto que emprendemos.
+
+\subsection{Misión}
+
+Desarrollar soluciones tecnológicas innovadoras y seguras que transformen la manera en que las organizaciones gestionan información crítica, contribuyendo al fortalecimiento institucional y al impacto positivo en las comunidades que atienden.
+
+\subsection{Visión}
+
+Ser reconocidos como líderes en el desarrollo de sistemas de software especializados para organizaciones sociales y del sector público, caracterizándonos por nuestra excelencia técnica, compromiso ético y capacidad de generar soluciones que protejan la información sensible y faciliten la toma de decisiones estratégicas.
+
+\subsection{Servicios}
+
+Xolix Systems ofrece una amplia gama de servicios tecnológicos orientados a satisfacer las necesidades específicas de nuestros clientes:
+
+\begin{itemize}
+    \item Desarrollo de aplicaciones web y móviles con arquitecturas seguras y escalables
+    \item Consultoría en análisis y diseño de sistemas de información
+    \item Implementación de soluciones basadas en inteligencia artificial y aprendizaje automático
+    \item Auditoría y fortalecimiento de seguridad informática
+    \item Capacitación y acompañamiento en la adopción de nuevas tecnologías
+    \item Mantenimiento y soporte técnico especializado
+\end{itemize}
+
+\newpage
+
+% Sección 2: Descripción del Problema
+\section{Descripción del Problema}
+
+\subsection{Contexto del Cliente}
+
+El cliente es una fundación dedicada al apoyo integral de niños, niñas y adolescentes en situación de orfandad, así como de madres y abuelas cuidadoras que han sido afectadas por la violencia de género. Esta organización desempeña un papel fundamental en la protección y atención de poblaciones vulnerables, coordinando esfuerzos entre diversas áreas especializadas para brindar apoyo legal, psicológico, social y económico.
+
+La fundación opera bajo un modelo inspirado en el Movimiento Sentinela, donde miembros de la comunidad actúan como observadores y reportan posibles casos de niños y familias en situación de vulnerabilidad. Estos reportes son posteriormente validados y documentados por el equipo profesional de la fundación para su seguimiento y atención.
+
+\subsection{Problemática Actual}
+
+Actualmente, la fundación enfrenta serios desafíos en la gestión de la información relacionada con los casos que atiende:
+
+\begin{itemize}
+    \item \textbf{Comunicación interna deficiente:} Las diferentes áreas (legal, psicológica, trabajo social, donativos, coordinación general) operan con información fragmentada y desactualizada, lo que dificulta la atención integral de los casos.
+    
+    \item \textbf{Desorganización de reportes:} Los reportes generados por los sentinelas comunitarios y el personal de la fundación no están centralizados, generando duplicidad de información, pérdida de datos relevantes y dificultad para el seguimiento de casos.
+    
+    \item \textbf{Falta de trazabilidad:} No existe un registro sistemático del historial de acciones realizadas en cada caso, lo que complica la evaluación del impacto de las intervenciones y la rendición de cuentas.
+    
+    \item \textbf{Gestión ineficiente de información sensible:} La ausencia de un sistema de control de accesos basado en roles expone información confidencial a personal no autorizado y dificulta el cumplimiento de protocolos de confidencialidad.
+    
+    \item \textbf{Dificultad en la priorización:} Sin herramientas de clasificación automática, el personal debe revisar manualmente toda la información para identificar aspectos relevantes según su área de competencia, resultando en pérdida de tiempo y posibles omisiones.
+\end{itemize}
+
+Esta situación no solo afecta la eficiencia operativa de la fundación, sino que también compromete la calidad de la atención que se brinda a las personas beneficiarias, quienes requieren respuestas oportunas y coordinadas.
+
+\newpage
+
+% Sección 3: Propuesta de Solución
+\section{Propuesta de Solución}
+
+\subsection{Descripción General del Sistema}
+
+Xolix Systems propone el desarrollo de una aplicación web integral y segura denominada \textbf{Sistema de Gestión de Casos y Reportes (SGCR)}, diseñada específicamente para centralizar, organizar y facilitar el acceso controlado a la información relacionada con los casos atendidos por la fundación.
+
+El sistema permitirá la captura estructurada de reportes desde múltiples fuentes, la validación y enriquecimiento de información por parte del personal autorizado, y la presentación personalizada de datos relevantes a cada área según sus funciones y necesidades específicas. Mediante el uso de tecnologías de inteligencia artificial, el sistema clasificará automáticamente la información contenida en cada reporte para optimizar su distribución y visualización.
+
+\subsection{Funcionamiento del Flujo del Sistema}
+
+El sistema operará bajo el siguiente flujo de información:
+
+\begin{enumerate}
+    \item \textbf{Registro de reportes iniciales:} Los sentinelas comunitarios registrarán observaciones y reportes preliminares a través de formularios web simplificados que capturan información básica sobre posibles casos de niños, niñas o familias en situación de vulnerabilidad.
+    
+    \item \textbf{Validación y enriquecimiento:} El personal autorizado de la fundación revisará los reportes iniciales, validará la información, agregará detalles adicionales y actualizará el estado del caso según los hallazgos y acciones realizadas.
+    
+    \item \textbf{Clasificación automática mediante IA:} Un módulo de inteligencia artificial analizará el contenido textual de cada reporte para identificar y etiquetar automáticamente elementos relevantes tales como:
+    \begin{itemize}
+        \item Aspectos legales (menciones de procedimientos judiciales, documentación requerida, plazos legales)
+        \item Aspectos psicológicos (indicadores emocionales, necesidades terapéuticas, situaciones de crisis)
+        \item Necesidades materiales (solicitudes de apoyo económico, donaciones en especie)
+        \item Información administrativa (datos de contacto, seguimiento de citas, coordinación entre áreas)
+    \end{itemize}
+    
+    \item \textbf{Presentación personalizada por roles:} Cada usuario del sistema verá únicamente la información relevante para su área de competencia, facilitando la toma de decisiones y acciones específicas sin sobrecarga de información innecesaria.
+    
+    \item \textbf{Generación de alertas y notificaciones:} El sistema generará alertas automáticas cuando se detecten situaciones que requieren atención prioritaria o cuando se cumplan plazos establecidos para acciones específicas.
+    
+    \item \textbf{Trazabilidad completa:} Todas las acciones realizadas sobre cada caso quedarán registradas con fecha, hora y usuario responsable, garantizando transparencia y rendición de cuentas.
+\end{enumerate}
+
+\subsection{Uso de Inteligencia Artificial}
+
+La implementación de algoritmos de procesamiento de lenguaje natural (NLP) y aprendizaje automático permitirá:
+
+\begin{itemize}
+    \item Extracción automática de entidades y conceptos clave de los reportes textuales
+    \item Clasificación de información por categorías relevantes para cada área funcional
+    \item Detección de patrones y tendencias en los casos atendidos
+    \item Sugerencias automáticas de acciones basadas en casos similares previamente atendidos
+    \item Reducción significativa del tiempo dedicado a la revisión manual de documentos
+\end{itemize}
+
+Esta capacidad de análisis inteligente representa un diferenciador tecnológico que aumentará sustancialmente la eficiencia operativa de la fundación.
+
+\newpage
+
+% Sección 4: Objetivo del Proyecto
+\section{Objetivo del Proyecto}
+
+Desarrollar e implementar un sistema web seguro y centralizado para la gestión integral de casos y reportes que permita a la fundación mejorar significativamente la comunicación interna, organizar eficientemente la información sensible, facilitar el seguimiento de casos y optimizar la coordinación entre las diferentes áreas de atención mediante el uso de tecnologías de inteligencia artificial para la clasificación y presentación personalizada de información.
+
+\textbf{Objetivos específicos:}
+
+\begin{itemize}
+    \item Centralizar todos los reportes y casos en una única plataforma accesible de manera segura
+    \item Implementar un sistema de control de accesos basado en roles que garantice la confidencialidad
+    \item Automatizar la clasificación de información mediante algoritmos de inteligencia artificial
+    \item Facilitar la trazabilidad completa del historial de acciones en cada caso
+    \item Mejorar la eficiencia en la toma de decisiones mediante la presentación de información relevante
+    \item Reducir la duplicidad de información y los errores de comunicación entre áreas
+    \item Generar reportes estadísticos y analíticos para la evaluación del impacto institucional
+\end{itemize}
+
+\newpage
+
+% Sección 5: Alcance del Proyecto
+\section{Alcance del Proyecto}
+
+\subsection{Incluye}
+
+El proyecto contempla el desarrollo completo de los siguientes componentes y funcionalidades:
+
+\subsubsection{Módulo de Gestión de Usuarios}
+\begin{itemize}
+    \item Registro y administración de usuarios del sistema
+    \item Asignación de roles y permisos diferenciados (coordinador, personal legal, psicólogo, trabajador social, gestor de donativos, sentinela comunitario)
+    \item Autenticación segura y recuperación de contraseñas
+    \item Gestión de sesiones y control de accesos
+\end{itemize}
+
+\subsubsection{Módulo de Registro de Reportes}
+\begin{itemize}
+    \item Formularios web para captura de reportes iniciales por sentinelas
+    \item Formularios extendidos para validación y enriquecimiento por personal autorizado
+    \item Carga de documentos adjuntos (fotografías, documentos escaneados, evidencias)
+    \item Registro de ubicación geográfica de los casos
+\end{itemize}
+
+\subsubsection{Módulo de Gestión de Casos}
+\begin{itemize}
+    \item Visualización del catálogo completo de casos registrados
+    \item Filtros de búsqueda avanzada por diferentes criterios
+    \item Actualización de estado de casos (nuevo, en revisión, en atención, cerrado)
+    \item Asignación de casos a personal responsable
+    \item Historial completo de acciones y modificaciones
+\end{itemize}
+
+\subsubsection{Módulo de Inteligencia Artificial}
+\begin{itemize}
+    \item Procesamiento automático de texto de reportes
+    \item Clasificación de información por categorías (legal, psicológica, donaciones, administrativa)
+    \item Extracción de entidades relevantes (nombres, fechas, ubicaciones, necesidades)
+    \item Entrenamiento y actualización de modelos de clasificación
+\end{itemize}
+
+\subsubsection{Módulo de Visualización Personalizada}
+\begin{itemize}
+    \item Paneles de control específicos para cada rol
+    \item Presentación de información clasificada según área de competencia
+    \item Alertas y notificaciones personalizadas
+    \item Indicadores y métricas relevantes para cada área
+\end{itemize}
+
+\subsubsection{Módulo de Reportes y Estadísticas}
+\begin{itemize}
+    \item Generación de reportes ejecutivos
+    \item Estadísticas de casos atendidos por período
+    \item Análisis de tendencias y patrones
+    \item Exportación de información en formatos estándar (PDF, Excel)
+\end{itemize}
+
+\subsubsection{Infraestructura Tecnológica}
+\begin{itemize}
+    \item Desarrollo del backend con FastAPI
+    \item Desarrollo del frontend con Angular
+    \item Implementación de base de datos relacional segura
+    \item Configuración de servidor de aplicaciones
+    \item Implementación de medidas de seguridad (cifrado, respaldos, logs de auditoría)
+\end{itemize}
+
+\subsubsection{Documentación y Capacitación}
+\begin{itemize}
+    \item Documentación técnica del sistema
+    \item Manuales de usuario para cada rol
+    \item Capacitación presencial y virtual al personal de la fundación
+    \item Guías de administración del sistema
+\end{itemize}
+
+\subsection{No Incluye}
+
+Para mantener claridad sobre los límites del proyecto, se especifica expresamente que quedan fuera del alcance los siguientes elementos:
+
+\begin{itemize}
+    \item Desarrollo de aplicaciones móviles nativas (iOS o Android)
+    \item Integración con sistemas externos de terceros no especificados
+    \item Servicios de hosting o infraestructura en la nube (responsabilidad del cliente)
+    \item Migración de datos históricos existentes en formatos físicos o sistemas previos
+    \item Desarrollo de módulos de contabilidad o gestión financiera completa
+    \item Servicios de soporte técnico más allá del período de garantía establecido
+    \item Modificaciones mayores al alcance definido sin autorización formal mediante cambio de orden
+\end{itemize}
+
+\newpage
+
+% Sección 6: Beneficios de la Propuesta
+\section{Beneficios de la Propuesta}
+
+La implementación del Sistema de Gestión de Casos y Reportes generará beneficios tangibles e intangibles para la fundación y las personas a quienes atiende:
+
+\subsection{Beneficios Operativos}
+
+\begin{itemize}
+    \item \textbf{Centralización de información:} Eliminación de la dispersión de datos en múltiples archivos y sistemas desconectados, facilitando el acceso rápido y confiable a la información necesaria.
+    
+    \item \textbf{Reducción de tiempo en búsqueda de información:} Los usuarios podrán localizar información específica en segundos mediante filtros y búsquedas inteligentes, en lugar de revisar manualmente múltiples documentos.
+    
+    \item \textbf{Eliminación de duplicidad:} El sistema prevendrá el registro duplicado de casos y consolidará información relacionada automáticamente.
+    
+    \item \textbf{Automatización de tareas repetitivas:} La clasificación automática de información reducirá significativamente el tiempo dedicado a tareas administrativas manuales.
+\end{itemize}
+
+\subsection{Beneficios en Seguridad y Confidencialidad}
+
+\begin{itemize}
+    \item \textbf{Control de accesos robusto:} Garantía de que cada usuario accede únicamente a la información autorizada según su rol, protegiendo datos sensibles de niños, niñas y familias.
+    
+    \item \textbf{Trazabilidad completa:} Registro de auditoría de todas las acciones realizadas, permitiendo identificar responsabilidades y detectar accesos no autorizados.
+    
+    \item \textbf{Respaldos automáticos:} Protección contra pérdida de información mediante copias de seguridad periódicas y automatizadas.
+    
+    \item \textbf{Cifrado de datos sensibles:} Protección de información confidencial mediante técnicas criptográficas de nivel empresarial.
+\end{itemize}
+
+\subsection{Beneficios en Coordinación y Comunicación}
+
+\begin{itemize}
+    \item \textbf{Visibilidad compartida:} Todos los miembros autorizados del equipo podrán ver el estado actualizado de cada caso en tiempo real.
+    
+    \item \textbf{Reducción de comunicación informal:} Disminución de la necesidad de consultas telefónicas o por mensajería para obtener información sobre casos.
+    
+    \item \textbf{Notificaciones automáticas:} Alertas oportunas sobre eventos importantes, plazos vencidos o situaciones que requieren atención inmediata.
+    
+    \item \textbf{Colaboración interdisciplinaria:} Facilitación del trabajo coordinado entre áreas mediante acceso compartido a información relevante.
+\end{itemize}
+
+\subsection{Beneficios Estratégicos}
+
+\begin{itemize}
+    \item \textbf{Toma de decisiones basada en datos:} Disponibilidad de estadísticas, tendencias y análisis que permiten decisiones estratégicas fundamentadas.
+    
+    \item \textbf{Medición de impacto:} Capacidad de cuantificar y demostrar el alcance y efectividad de las intervenciones realizadas.
+    
+    \item \textbf{Mejora continua:} Identificación de áreas de oportunidad y patrones recurrentes que permiten optimizar procesos y protocolos de atención.
+    
+    \item \textbf{Transparencia institucional:} Generación de reportes confiables para rendición de cuentas ante donantes, autoridades y la comunidad.
+\end{itemize}
+
+\subsection{Beneficios para los Beneficiarios}
+
+\begin{itemize}
+    \item \textbf{Atención más oportuna:} La eficiencia operativa se traduce en respuestas más rápidas a las necesidades de niños, niñas y familias.
+    
+    \item \textbf{Atención integral coordinada:} La visibilidad compartida garantiza que todas las áreas trabajen de manera sincronizada en cada caso.
+    
+    \item \textbf{Reducción de revictimización:} La información centralizada evita que los beneficiarios tengan que repetir su historia múltiples veces ante diferentes profesionales.
+    
+    \item \textbf{Continuidad de atención:} El historial completo asegura continuidad incluso ante cambios de personal responsable.
+\end{itemize}
+
+\newpage
+
+% Sección 7: Arquitectura y Tecnologías Propuestas
+\section{Arquitectura y Tecnologías Propuestas}
+
+\subsection{Arquitectura General del Sistema}
+
+El sistema se desarrollará bajo una arquitectura de tres capas que garantiza escalabilidad, mantenibilidad y seguridad:
+
+\begin{enumerate}
+    \item \textbf{Capa de presentación (Frontend):} Interfaz de usuario desarrollada con Angular
+    \item \textbf{Capa de lógica de negocio (Backend):} API RESTful desarrollada con FastAPI
+    \item \textbf{Capa de datos:} Base de datos relacional con implementación de medidas de seguridad
+\end{enumerate}
+
+Esta arquitectura permite la separación clara de responsabilidades, facilita el mantenimiento evolutivo y posibilita futuras integraciones con otros sistemas.
+
+\subsection{Tecnologías del Backend}
+
+\textbf{Framework principal: FastAPI}
+
+FastAPI es un framework moderno de Python caracterizado por su alto rendimiento, facilidad de desarrollo y generación automática de documentación. Se ha seleccionado por las siguientes razones:
+
+\begin{itemize}
+    \item Alto rendimiento comparable a frameworks como Node.js y Go
+    \item Validación automática de datos mediante Pydantic
+    \item Generación automática de documentación interactiva (Swagger/OpenAPI)
+    \item Soporte nativo para operaciones asíncronas
+    \item Facilita la implementación de seguridad mediante OAuth2 y JWT
+    \item Amplia comunidad de desarrolladores y documentación extensa
+\end{itemize}
+
+\textbf{Componentes complementarios:}
+
+\begin{itemize}
+    \item \textbf{SQLAlchemy:} ORM para gestión de base de datos
+    \item \textbf{Alembic:} Gestor de migraciones de base de datos
+    \item \textbf{Pydantic:} Validación de datos y serialización
+    \item \textbf{PassLib:} Gestión segura de contraseñas con hashing
+    \item \textbf{Python-Jose:} Implementación de tokens JWT
+    \item \textbf{spaCy / Transformers:} Librerías de procesamiento de lenguaje natural para el módulo de IA
+    \item \textbf{scikit-learn:} Algoritmos de aprendizaje automático para clasificación
+\end{itemize}
+
+\subsection{Tecnologías del Frontend}
+
+\textbf{Framework principal: Angular}
+
+Angular es un framework robusto de desarrollo web desarrollado y mantenido por Google, ideal para aplicaciones empresariales complejas:
+
+\begin{itemize}
+    \item Arquitectura basada en componentes reutilizables
+    \item Sistema de routing para navegación de aplicación de página única (SPA)
+    \item Inyección de dependencias para código modular y testeable
+    \item TypeScript para desarrollo con tipado estático
+    \item RxJS para programación reactiva y manejo de eventos asíncronos
+    \item Angular Material para componentes de interfaz de usuario consistentes
+\end{itemize}
+
+\textbf{Componentes complementarios:}
+
+\begin{itemize}
+    \item \textbf{Angular Material:} Librería de componentes UI siguiendo Material Design
+    \item \textbf{Chart.js / ngx-charts:} Visualización de datos y gráficos estadísticos
+    \item \textbf{RxJS:} Programación reactiva para manejo de eventos y datos asíncronos
+    \item \textbf{Angular Forms:} Gestión avanzada de formularios con validaciones
+\end{itemize}
+
+\subsection{Base de Datos}
+
+\textbf{Sistema gestor: PostgreSQL}
+
+PostgreSQL es un sistema de gestión de bases de datos relacional de código abierto, reconocido por su robustez, extensibilidad y conformidad con estándares SQL:
+
+\begin{itemize}
+    \item Soporte para tipos de datos avanzados (JSON, arrays, tipos personalizados)
+    \item Transacciones ACID para garantizar integridad de datos
+    \item Soporte para índices avanzados y optimización de consultas
+    \item Capacidades de búsqueda de texto completo
+    \item Replicación y alta disponibilidad
+    \item Amplia comunidad y documentación
+\end{itemize}
+
+\textbf{Diseño de base de datos:}
+
+El esquema de base de datos incluirá tablas principales para:
+
+\begin{itemize}
+    \item Usuarios y roles
+    \item Casos y reportes
+    \item Documentos adjuntos
+    \item Historial de acciones (auditoría)
+    \item Clasificaciones generadas por IA
+    \item Notificaciones y alertas
+\end{itemize}
+
+\subsection{Seguridad}
+
+La seguridad es un aspecto fundamental del sistema, implementándose en múltiples niveles:
+
+\subsubsection{Autenticación y Autorización}
+
+\begin{itemize}
+    \item Autenticación mediante JSON Web Tokens (JWT)
+    \item Sistema de roles y permisos granulares
+    \item Políticas de contraseñas robustas (longitud mínima, complejidad, expiración)
+    \item Autenticación de dos factores (opcional, configurable)
+    \item Cierre automático de sesión por inactividad
+\end{itemize}
+
+\subsubsection{Protección de Datos}
+
+\begin{itemize}
+    \item Cifrado de contraseñas mediante algoritmos bcrypt
+    \item Cifrado de datos sensibles en reposo
+    \item Comunicaciones mediante protocolo HTTPS/TLS
+    \item Validación y sanitización de todas las entradas de usuario
+    \item Protección contra inyección SQL mediante ORM parametrizado
+\end{itemize}
+
+\subsubsection{Auditoría y Monitoreo}
+
+\begin{itemize}
+    \item Registro detallado de todas las acciones de usuario (logs de auditoría)
+    \item Monitoreo de intentos de acceso no autorizados
+    \item Alertas automáticas ante actividades sospechosas
+    \item Respaldos automáticos programados con retención configurable
+\end{itemize}
+
+\subsubsection{Cumplimiento de Normativas}
+
+El sistema será diseñado considerando mejores prácticas de protección de datos personales, especialmente para información sensible de menores de edad, alineándose con regulaciones aplicables de protección de datos y privacidad.
+
+\subsection{Módulo de Inteligencia Artificial}
+
+El componente de IA se basará en técnicas de procesamiento de lenguaje natural (NLP) y aprendizaje automático:
+
+\begin{itemize}
+    \item \textbf{Preprocesamiento de texto:} Normalización, tokenización, eliminación de palabras vacías
+    \item \textbf{Extracción de características:} TF-IDF, embeddings de palabras (Word2Vec, BERT)
+    \item \textbf{Clasificación multiclase:} Asignación de etiquetas correspondientes a áreas funcionales
+    \item \textbf{Reconocimiento de entidades nombradas (NER):} Extracción de nombres, fechas, ubicaciones
+    \item \textbf{Reentrenamiento periódico:} Actualización de modelos con nuevos datos validados
+\end{itemize}
+
+\subsection{Infraestructura y Despliegue}
+
+El sistema será desplegado siguiendo mejores prácticas de DevOps:
+
+\begin{itemize}
+    \item Contenedorización mediante Docker para facilitar despliegue y escalabilidad
+    \item Servidor web Nginx como proxy inverso
+    \item Servidor de aplicaciones Gunicorn o Uvicorn para FastAPI
+    \item Scripts automatizados para respaldos de base de datos
+    \item Configuración de variables de entorno para diferentes ambientes (desarrollo, pruebas, producción)
+\end{itemize}
+
+\newpage
+
+
+\section{Cumplimiento Normativo y Gestión de Riesgos}
+
+\subsection{Protección de Datos Personales}
+El sistema se diseñará bajo el principio de \textbf{Privacy by Design}, cumpliendo estrictamente con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP). Se implementarán mecanismos para el ejercicio de los derechos \textbf{ARCO} (Acceso, Rectificación, Cancelación y Oposición).
+
+\subsection{Matriz de Riesgos Técnicos}
+\begin{itemize}
+    \item \textbf{Riesgo:} Fuga de información sensible. \textbf{Mitigación:} Cifrado AES-256 en base de datos y protocolos TLS 1.3 en tránsito.
+    \item \textbf{Riesgo:} Indisponibilidad del servicio. \textbf{Mitigación:} Estrategia de respaldos automatizados (Backups) con redundancia geográfica semanal.
+    \item \textbf{Riesgo:} Sesgo en la IA. \textbf{Mitigación:} Supervisión humana (Human-in-the-loop) donde el personal experto validará las clasificaciones del sistema.
+\end{itemize}
+
+\section{Sostenibilidad y Soporte Post-Entrega}
+
+\subsection{Plan de Mantenimiento Evolutivo}
+Tras concluir el periodo de garantía de 3 meses, Xolix Systems propone las siguientes modalidades de soporte técnico:
+\begin{itemize}
+    \item \textbf{Soporte Preventivo:} Actualización semestral de dependencias (FastAPI, Angular) y parches de seguridad.
+    \item \textbf{Bolsa de Horas:} Contratación de un paquete de horas mensuales para ajustes menores o nuevas funcionalidades.
+\end{itemize}
+
+\subsection{Transferencia Tecnológica}
+Para garantizar la independencia de la Fundación, se entregará un \textbf{Plan de Sucesión Técnica} que incluye la documentación exhaustiva del código (docstrings) y esquemas de arquitectura, permitiendo que cualquier equipo técnico pueda retomar el proyecto en el futuro.
+
+\section{Metodología de Implementación}
+Para asegurar la adopción exitosa del sistema, el despliegue se realizará en tres fases:
+\begin{enumerate}
+    \item \textbf{Fase Piloto (Semanas 18-20):} Un grupo reducido de usuarios (un área funcional) probará el sistema en entorno real.
+    \item \textbf{Ajuste por Retroalimentación (Semanas 21-22):} Refinamiento de la interfaz y reentrenamiento de modelos de IA basado en datos reales del piloto.
+    \item \textbf{Lanzamiento Global (Semana 24):} Carga de usuarios masiva y acompañamiento técnico en sitio durante los primeros 3 días.
+\end{enumerate}
+
+
+\newpage
+% Sección 8: Entregables
+\section{Entregables}
+
+Al finalizar el proyecto, Xolix Systems entregará al cliente los siguientes productos y documentos:
+
+\subsection{Entregables de Software}
+
+\begin{enumerate}
+    \item \textbf{Sistema completo desplegado y funcional}
+    \begin{itemize}
+        \item Aplicación web accesible mediante navegador
+        \item Backend configurado y operativo
+        \item Base de datos implementada con datos de prueba
+        \item Módulo de inteligencia artificial entrenado y funcional
+    \end{itemize}
+    
+    \item \textbf{Código fuente completo}
+    \begin{itemize}
+        \item Código del backend (FastAPI) documentado
+        \item Código del frontend (Angular) documentado
+        \item Scripts de base de datos y migraciones
+        \item Scripts de despliegue y configuración
+        \item Repositorio Git con historial de versiones
+    \end{itemize}
+    
+    \item \textbf{Instaladores y archivos de configuración}
+    \begin{itemize}
+        \item Archivos Docker y Docker Compose
+        \item Archivos de configuración de servidor
+        \item Scripts de instalación automatizada
+        \item Archivos de configuración de variables de entorno
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Entregables de Documentación}
+
+\begin{enumerate}
+    \item \textbf{Documentación técnica}
+    \begin{itemize}
+        \item Documento de arquitectura del sistema
+        \item Diccionario de datos y diagramas de base de datos
+        \item Documentación de API (generada automáticamente por FastAPI)
+        \item Guía de instalación y configuración
+        \item Procedimientos de respaldo y recuperación
+        \item Guía de mantenimiento y actualización
+    \end{itemize}
+    
+    \item \textbf{Manuales de usuario}
+    \begin{itemize}
+        \item Manual de usuario para coordinadores
+        \item Manual de usuario para personal legal
+        \item Manual de usuario para personal psicológico
+        \item Manual de usuario para trabajadores sociales
+        \item Manual de usuario para gestores de donativos
+        \item Manual de usuario para sentinelas comunitarios
+        \item Manual de administrador del sistema
+    \end{itemize}
+    
+    \item \textbf{Documentación de pruebas}
+    \begin{itemize}
+        \item Plan de pruebas
+        \item Casos de prueba ejecutados
+        \item Reporte de pruebas de funcionalidad
+        \item Reporte de pruebas de seguridad
+        \item Reporte de pruebas de usabilidad
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Entregables de Capacitación}
+
+\begin{enumerate}
+    \item \textbf{Sesiones de capacitación}
+    \begin{itemize}
+        \item Capacitación presencial al personal técnico (8 horas)
+        \item Capacitación presencial a usuarios finales (4 horas por grupo de rol)
+        \item Sesión de preguntas y respuestas
+    \end{itemize}
+    
+    \item \textbf{Materiales de capacitación}
+    \begin{itemize}
+        \item Presentaciones utilizadas en capacitaciones
+        \item Videos tutoriales de funciones principales
+        \item Guías rápidas de referencia
+        \item Preguntas frecuentes (FAQ)
+    \end{itemize}
+\end{enumerate}
+
+\newpage
+\subsection{Entregables de Garantía y Soporte}
+
+\begin{enumerate}
+    \item \textbf{Período de garantía}
+    \begin{itemize}
+        \item 3 meses de garantía sobre defectos de funcionamiento
+        \item Corrección de errores sin costo adicional durante el período de garantía
+        \item Soporte técnico vía correo electrónico y videollamada
+    \end{itemize}
+    
+    \item \textbf{Transferencia de conocimiento}
+    \begin{itemize}
+        \item Sesión de transferencia de conocimiento técnico al equipo de TI del cliente
+        \item Documentación de procedimientos operativos estándar
+    \end{itemize}
+\end{enumerate}
+
+Todos los entregables serán proporcionados en formato digital, y los documentos estarán disponibles en formato PDF. El código fuente será entregado mediante acceso a repositorio Git privado con instrucciones de clonación y configuración.
+
+\newpage
+
+% Sección 8.5: Cronograma de Trabajo
+\subsection{Forma de Pago Propuesta}
+
+El proyecto se ejecutará en un período estimado de 24 semanas. A continuación se presenta el cronograma detallado:
+
+\begin{table}[h]
+\centering
+\caption{Desglose de Costos del Proyecto}
+\label{tab:costos}
+\small
+\begin{tabular}{|p{6cm}|p{2cm}|p{2.5cm}|p{3cm}|}
+\hline
+\textbf{Concepto} & \textbf{Cantidad} & \textbf{Costo Unitario} & \textbf{Costo Total} \\
+\hline
+\hline
+\multicolumn{4}{|l|}{\textbf{Recursos Humanos (4 integrantes, 6 meses)}} \\
+\hline
+Desarrollador Full-Stack 1 & 360 horas & \$35.00 MXN/hr & \$12,600.00 MXN \\
+\hline
+Desarrollador Full-Stack 2 & 360 horas & \$35.00 MXN/hr & \$12,600.00 MXN \\
+\hline
+Especialista en IA/ML & 360 horas & \$40.00 MXN/hr & \$14,400.00 MXN \\
+\hline
+Analista y Documentador & 360 horas & \$35.00 MXN/hr & \$12,600.00 MXN \\
+\hline
+\multicolumn{3}{|r|}{\textbf{Subtotal Recursos Humanos:}} & \$52,200.00 MXN \\
+\hline
+\hline
+\multicolumn{4}{|l|}{\textbf{Gastos Operativos}} \\
+\hline
+Hosting para desarrollo & 6 meses & \$300.00 MXN/mes & \$1,800.00 MXN \\
+\hline
+Dominio y certificado SSL & 1 año & \$500.00 MXN & \$500.00 MXN \\
+\hline
+Herramientas y software & Global & --- & \$2,000.00 MXN \\
+\hline
+Materiales de capacitación & Global & --- & \$500.00 MXN \\
+\hline
+\multicolumn{3}{|r|}{\textbf{Subtotal Gastos Operativos:}} & \$4,800.00 MXN \\
+\hline
+\hline
+\multicolumn{3}{|r|}{\textbf{SUBTOTAL:}} & \$57,000.00 MXN \\
+\hline
+\multicolumn{3}{|r|}{\textbf{Descuento por proyecto académico (-20\%):}} & -\$11,400.00 MXN \\
+\hline
+\hline
+\multicolumn{3}{|r|}{\textbf{COSTO TOTAL DEL PROYECTO:}} & \textbf{\$45,600.00 MXN} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{(Aproximadamente:}} & \textbf{\$2,500.00 USD)*} \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+\noindent
+\small{*Tipo de cambio referencial: 1 USD = 18.24 MXN}
+
+
+\begin{table}[h]
+\centering
+\caption{Esquema de Pagos}
+\label{tab:pagos}
+\begin{tabular}{|p{1.5cm}|p{7cm}|p{2.5cm}|p{3cm}|}
+\hline
+\textbf{Pago} & \textbf{Hito} & \textbf{Porcentaje} & \textbf{Monto} \\
+\hline
+\hline
+Pago 1 & Firma de convenio e inicio del proyecto (cubre gastos iniciales) & 30\% & \$13,680.00 MXN \\
+\hline
+Pago 2 & Backend completo y frontend en desarrollo avanzado (semana 12) & 40\% & \$18,240.00 MXN \\
+\hline
+Pago 3 & Sistema completo, capacitación finalizada y entrega de documentación (semana 24) & 30\% & \$13,680.00 MXN \\
+\hline
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL:}} & \textbf{\$45,600.00 MXN} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Consideraciones Importantes}
+
+\begin{itemize}
+    \item Este proyecto se desarrolla como parte de un trabajo de vinculación académica entre la universidad y la fundación.
+    
+    \item El costo refleja una \textbf{tarifa preferencial del 20\%} por tratarse de un proyecto social y de formación académica.
+    
+    \item Los cuatro integrantes del equipo son estudiantes de Ingeniería en Inteligencia Artificial de 4to semestre, supervisados por asesores académicos.
+    
+    \item El proyecto tendrá una duración de 6 meses (24 semanas) con dedicación aproximada de 15 horas semanales por integrante.
+    
+    \item Se incluyen 3 meses de garantía sobre defectos de funcionamiento posteriores a la entrega.
+    
+    \item Los costos de hosting en producción después de los primeros 6 meses son responsabilidad de la fundación.
+    
+    \item Modificaciones mayores al alcance definido podrán ajustar los costos mediante acuerdo mutuo.
+\end{itemize}
+
+\subsection{Vigencia de la Propuesta}
+
+Esta propuesta tiene una vigencia de 60 días calendario a partir de la fecha de presentación. Transcurrido este período, Xolix Systems se reserva el derecho de actualizar los costos y condiciones según las condiciones del mercado y disponibilidad de recursos.
+
+\newpage
+
+
+
+% Sección 11: Conclusión Ejecutiva
+\section{Conclusión Ejecutiva}
+
+La presente propuesta técnico-económica presenta una solución integral y tecnológicamente robusta para atender las necesidades críticas de gestión de información que enfrenta actualmente la fundación. El Sistema de Gestión de Casos y Reportes desarrollado por Xolix Systems representa una inversión estratégica que transformará significativamente la capacidad operativa de la organización.
+
+\subsection{Resumen de Valor de la Propuesta}
+
+El proyecto propuesto ofrece las siguientes ventajas competitivas:
+
+\begin{itemize}
+    \item \textbf{Tecnología de vanguardia:} Uso de frameworks modernos y probados (FastAPI, Angular) que garantizan rendimiento, seguridad y escalabilidad futura.
+    
+    \item \textbf{Innovación mediante IA:} Implementación de inteligencia artificial para clasificación automática de información, una característica diferenciadora que optimiza significativamente los tiempos de trabajo del personal.
+    
+    \item \textbf{Seguridad empresarial:} Implementación de múltiples capas de seguridad diseñadas específicamente para proteger información sensible de poblaciones vulnerables.
+    
+    \item \textbf{Experiencia especializada:} Equipo de profesionales con experiencia demostrada en desarrollo de sistemas para organizaciones sociales y manejo de información confidencial.
+    
+    \item \textbf{Enfoque integral:} La propuesta no solo incluye desarrollo de software, sino capacitación completa, documentación exhaustiva y período de garantía.
+\end{itemize}
+
+\subsection{Impacto Esperado}
+
+La implementación exitosa del sistema generará los siguientes impactos cuantificables:
+
+\begin{itemize}
+    \item Reducción de hasta 60\% en tiempo dedicado a búsqueda y organización manual de información
+    \item Eliminación prácticamente total de duplicidad de casos y reportes
+    \item Mejora en tiempo de respuesta a casos urgentes gracias a sistema de alertas automáticas
+    \item Incremento en capacidad de generar reportes estadísticos para donantes y autoridades
+    \item Fortalecimiento de la transparencia y rendición de cuentas institucional
+\end{itemize}
+
+\subsection{Compromiso de Xolix Systems}
+
+Xolix Systems se compromete a entregar un producto de la más alta calidad técnica, cumpliendo con los más estrictos estándares de desarrollo de software, documentación profesional y transferencia efectiva de conocimiento. Nuestro equipo trabajará en estrecha colaboración con el personal de la fundación para asegurar que el sistema resultante responda fielmente a las necesidades operativas reales.
+
+\subsection{Próximos Pasos}
+
+De encontrar satisfactoria esta propuesta, sugerimos proceder con los siguientes pasos:
+
+\begin{enumerate}
+    \item Revisión y retroalimentación sobre el alcance propuesto
+    \item Reunión de aclaraciones y ajustes finales
+    \item Formalización de contrato
+    \item Reunión de inicio de proyecto (kick-off)
+    \item Inicio de fase de análisis y diseño detallado
+\end{enumerate}
+
+\subsection{Agradecimiento}
+
+Agradecemos la oportunidad de presentar esta propuesta y la confianza depositada en Xolix Systems. Estamos convencidos de que esta solución tecnológica contribuirá significativamente al fortalecimiento de la importante labor que la fundación realiza en favor de niños, niñas, adolescentes y familias en situación de vulnerabilidad.
+
+Quedamos a disposición para cualquier aclaración o información adicional que requieran para la evaluación de esta propuesta.
+
+\vspace{1cm}
+
+\noindent
+Atentamente,
+
+\vspace{1.5cm}
+
+\noindent
+\textbf{Xolix Systems}\\
+Soluciones Tecnológicas para la Gestión de Información Sensible\\
+\href{mailto:xolixsys@gmail.com}{xolixsys@gmail.com}
+
+\end{document}
