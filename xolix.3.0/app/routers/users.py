@@ -6,6 +6,8 @@ import shutil
 from app.dependencies import get_db, get_current_user, require_role
 from app.schemas.user import UserCreate, UserUpdate, UserResponse
 from app.services import user_service
+from app.services import email_service
+import jwt
 from app.config import get_settings
 
 router = APIRouter(prefix="/api/usuarios", tags=["Usuarios"])
@@ -31,14 +33,42 @@ def obtener_usuario(
     return usuario
 
 
-@router.post("/", response_model=dict)
-def crear_usuario(
-    user: UserCreate,
-    db: Session = Depends(get_db),
-    _admin: dict = Depends(require_role("director", "coordinador")),
-):
-    nuevo = user_service.crear_usuario(db, user)
-    return {"mensaje": "Usuario creado correctamente", "id": nuevo.id}
+@router.post("/", response_model=UserResponse)
+def crear_usuario(user_in: UserCreate, db: Session = Depends(get_db)):
+    nuevo_usuario = user_service.crear_usuario(db, user_in)
+    
+    # Enviar correo de verificación simulado
+    nombre_completo = f"{nuevo_usuario.nombre} {nuevo_usuario.apellido_paterno}"
+    email_service.enviar_correo_verificacion(nuevo_usuario.correo, nombre_completo)
+    
+    return nuevo_usuario
+
+@router.get("/verificar/{token}")
+def verificar_correo(token: str, db: Session = Depends(get_db)):
+    try:
+        from app.services.email_service import SECRET_KEY, ALGORITHM
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        correo = payload.get("sub")
+        tipo = payload.get("tipo")
+        
+        if not correo or tipo != "verificacion_email":
+            raise HTTPException(status_code=400, detail="Token inválido")
+            
+        usuario = user_service.obtener_usuario_por_correo(db, correo)
+        if not usuario:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+            
+        if usuario.verificado:
+            return {"mensaje": "La cuenta ya estaba verificada"}
+            
+        usuario.verificado = True
+        db.commit()
+        return {"mensaje": "Cuenta verificada con éxito"}
+        
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=400, detail="El enlace de verificación ha expirado")
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=400, detail="Token de verificación inválido")
 
 
 @router.put("/{usuario_id}", response_model=dict)

@@ -1,16 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import api from '../api/client';
 
 export default function Register() {
-  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState('');
   const [msgColor, setMsgColor] = useState('');
   const [loading, setLoading] = useState(false);
   const [cargandoCP, setCargandoCP] = useState(false);
   const [colonias, setColonias] = useState([]);
+  const [registroExitoso, setRegistroExitoso] = useState(false);
 
   const [form, setForm] = useState({
     nombre: '',
@@ -38,12 +37,19 @@ export default function Register() {
     setForm(prev => ({ ...prev, [name]: name === 'rfc' || name === 'curp' ? value.toUpperCase() : value }));
   }
 
-  async function handleCPBlur() {
-    if (form.codigo_postal.length === 5) {
-      setCargandoCP(true);
-      setMensaje('');
-      try {
-        // Fetch SEPOMEX data
+  useEffect(() => {
+    if (form.codigo_postal && form.codigo_postal.length === 5) {
+      handleCPFetch(form.codigo_postal);
+    } else {
+      setColonias([]);
+    }
+  }, [form.codigo_postal]);
+
+  async function handleCPFetch(cp) {
+    setCargandoCP(true);
+    setMensaje('');
+    try {
+      // Fetch SEPOMEX data
         const res = await api.client.get(`/sepomex/cp/${form.codigo_postal}`);
         const data = res.data;
         setForm(prev => ({
@@ -60,9 +66,6 @@ export default function Register() {
       } finally {
         setCargandoCP(false);
       }
-    } else {
-      setColonias([]);
-    }
   }
 
   function validateFrontEnd() {
@@ -102,9 +105,7 @@ export default function Register() {
 
     try {
       await api.createUser(form);
-      setMensaje('Usuario registrado correctamente ✓');
-      setMsgColor('success');
-      setTimeout(() => navigate('/dashboard'), 1200);
+      setRegistroExitoso(true);
     } catch (err) {
       setMensaje(err.message);
       setMsgColor('error');
@@ -113,14 +114,21 @@ export default function Register() {
     }
   }
 
-  if (!isAdmin) {
+  if (registroExitoso) {
     return (
       <div className="page-center">
-        <div className="neo-card">
-          <h2 className="logo">XOLIX</h2>
-          <p className="subtitle">No tienes permisos para registrar personal.</p>
-          <button className="btn btn-secondary" onClick={() => navigate('/dashboard')}>
-            Volver al Dashboard
+        <div className="neo-card" style={{ maxWidth: '500px', textAlign: 'center' }}>
+          <h2 className="logo" style={{ marginBottom: '1rem' }}>XOLIX</h2>
+          <div className="mensaje success" style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>
+            🎉 ¡Registro exitoso!
+          </div>
+          <p className="subtitle" style={{ marginBottom: '2rem' }}>
+            Hemos creado tu cuenta. Para proteger tu seguridad, es necesario verificar tu identidad. 
+            <strong> Revisa tu correo electrónico</strong> (o la consola del servidor de simulación) 
+            y haz clic en el enlace de verificación para activar tu cuenta.
+          </p>
+          <button className="btn btn-primary" onClick={() => navigate('/')}>
+            Ir al Login
           </button>
         </div>
       </div>
@@ -171,7 +179,6 @@ export default function Register() {
                 maxLength={5} 
                 value={form.codigo_postal} 
                 onChange={handleChange} 
-                onBlur={handleCPBlur}
                 required 
               />
             </div>
@@ -231,7 +238,7 @@ export default function Register() {
             </div>
           </div>
 
-          <input name="password" type="password" placeholder="Contraseña segura" value={form.password} onChange={handleChange} required />
+          <input name="password" type="password" placeholder="Contraseña segura (mínimo 6 caract.)" minLength={6} value={form.password} onChange={handleChange} required />
 
           <div className="form-actions" style={{ marginTop: '2rem' }}>
             <button type="button" className="btn btn-secondary" onClick={() => navigate('/dashboard')}>Cancelar</button>

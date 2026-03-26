@@ -17,7 +17,7 @@ cur.execute("""
     INSERT INTO users (
         nombre, apellido_paterno, apellido_materno, rfc, curp, sexo, fecha_nacimiento,
         edad, estado, municipio, colonia, calle, numero, codigo_postal, calles_aledanas,
-        tipo_personal, rol, correo, password, activo
+        tipo_personal, rol, correo, password, activo, verificado
     ) VALUES (
         'Jennifer', 'Director', 'Prueba',
         'JENX900101AAA',
@@ -28,9 +28,10 @@ cur.execute("""
         'empleado', 'director',
         'jennifer@xolix.com',
         %s,
+        true,
         true
     )
-    ON CONFLICT (correo) DO UPDATE SET password = %s, rol = 'director', activo = true
+    ON CONFLICT (correo) DO UPDATE SET password = %s, rol = 'director', activo = true, verificado = true
 """, (password_hash, password_hash))
 
 conn.commit()

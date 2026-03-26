@@ -61,6 +61,17 @@ export default function Expedientes() {
     }
   }
 
+  async function handleDownload(id, nombre) {
+    try {
+      setMensaje('Iniciando descarga...');
+      await api.downloadExpediente(id, nombre);
+      setMensaje('Descarga completada ✓');
+      setTimeout(() => setMensaje(''), 2500);
+    } catch (err) {
+      setMensaje('Error al descargar el archivo.');
+    }
+  }
+
   async function handleDelete() {
     try {
       await api.deleteExpediente(deleteTarget);
@@ -117,7 +128,7 @@ export default function Expedientes() {
                       )}
                       <td>
                         <div className="btn-actions">
-                          <a className="btn-sm btn-view" href={api.downloadExpediente(e.id)} target="_blank" rel="noreferrer">Descargar</a>
+                          <button className="btn-sm btn-view" onClick={() => handleDownload(e.id, e.nombre)}>Descargar</button>
                           {tab === 'propios' && (
                             <>
                               <button className="btn-sm btn-edit" onClick={() => setShowShare(e.id)}>Compartir</button>

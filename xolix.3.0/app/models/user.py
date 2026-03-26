@@ -28,6 +28,7 @@ class User(Base):
     correo = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     activo = Column(Boolean, default=True)
+    verificado = Column(Boolean, default=False)
     foto_perfil = Column(String(500), nullable=True, default=None)
     fecha_creacion = Column(TIMESTAMP, server_default=func.now())
 

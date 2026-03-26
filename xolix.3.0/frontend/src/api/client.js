@@ -27,6 +27,9 @@ async function request(endpoint, options = {}) {
   const data = await res.json();
 
   if (!res.ok) {
+    if (Array.isArray(data.detail)) {
+      throw new Error(data.detail[0].msg || 'Error de validación (Revisa los campos)');
+    }
     throw new Error(data.detail || 'Error en la solicitud');
   }
 
@@ -74,7 +77,33 @@ const api = {
       method: 'POST',
       body: formData,
     }),
-  downloadExpediente: (id) => `${API_BASE}/expedientes/${id}/descargar`,
+  downloadExpediente: async (id, fallbackName) => {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${API_BASE}/expedientes/${id}/descargar`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error('Error al descargar');
+    
+    // Attempt to get filename from Content-Disposition header
+    let filename = fallbackName || 'documento';
+    const disposition = res.headers.get('Content-Disposition');
+    if (disposition && disposition.indexOf('filename=') !== -1) {
+      const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+      const matches = filenameRegex.exec(disposition);
+      if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+    }
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  },
   compartirExpediente: (id, formData) =>
     request(`/expedientes/${id}/compartir`, {
       method: 'POST',
