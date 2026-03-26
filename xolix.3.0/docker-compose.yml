@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: xolix_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: proyecto_escom
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Inyecta el dump actual de la base de datos para que inicie con los usuarios y catálogos intactos
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    container_name: xolix_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      # Sobrescribimos el host "localhost" por el nombre del contenedor "db"
+      - DATABASE_URL=postgresql://postgres:12345@db:5432/proyecto_escom
+      - SECRET_KEY=b3af140b99147517c5bde8b625cf0c9a
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: xolix_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
