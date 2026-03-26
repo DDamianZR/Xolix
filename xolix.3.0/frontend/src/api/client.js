@@ -127,10 +127,10 @@ const api = {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
-  addSubtarea: (procesoId, titulo) =>
+  addSubtarea: (procesoId, titulo, fecha_vencimiento = null) =>
     request(`/procesos/${procesoId}/subtareas`, {
       method: 'POST',
-      body: JSON.stringify({ titulo }),
+      body: JSON.stringify({ titulo, fecha_vencimiento }),
     }),
   toggleSubtarea: (subtareaId) =>
     request(`/procesos/subtareas/${subtareaId}/toggle`, {

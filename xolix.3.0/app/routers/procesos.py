@@ -16,7 +16,14 @@ def crear_proceso(
 ):
     creador_id = current_user.get("user_id")
     proceso = proceso_service.crear_proceso(
-        db, data.titulo, data.descripcion, data.expediente_id, creador_id, data.usuario_ids
+        db,
+        data.titulo,
+        data.descripcion,
+        data.expediente_id,
+        creador_id,
+        data.usuario_ids,
+        data.prioridad,
+        data.fecha_vencimiento,
     )
     return {"mensaje": "Proceso creado correctamente", "id": proceso.id}
 
@@ -51,7 +58,14 @@ def actualizar_proceso(
     _current_user: dict = Depends(get_current_user),
 ):
     proceso_service.actualizar_proceso(
-        db, proceso_id, data.titulo, data.descripcion, data.estado, data.expediente_id
+        db,
+        proceso_id,
+        data.titulo,
+        data.descripcion,
+        data.estado,
+        data.expediente_id,
+        data.prioridad,
+        data.fecha_vencimiento,
     )
     return {"mensaje": "Proceso actualizado correctamente"}
 
@@ -63,7 +77,7 @@ def agregar_subtarea(
     db: Session = Depends(get_db),
     _current_user: dict = Depends(get_current_user),
 ):
-    subtarea = proceso_service.agregar_subtarea(db, proceso_id, data.titulo)
+    subtarea = proceso_service.agregar_subtarea(db, proceso_id, data.titulo, data.fecha_vencimiento)
     return {"mensaje": "Subtarea agregada", "id": subtarea.id}
 
 

@@ -11,6 +11,12 @@ class EstadoProceso(str, enum.Enum):
     terminado = "terminado"
 
 
+class PrioridadProceso(str, enum.Enum):
+    baja = "baja"
+    media = "media"
+    alta = "alta"
+
+
 # Many-to-many: procesos <-> usuarios
 proceso_usuarios = Table(
     "proceso_usuarios",
@@ -27,6 +33,8 @@ class Proceso(Base):
     titulo = Column(String(200), nullable=False)
     descripcion = Column(Text, nullable=True)
     estado = Column(SAEnum(EstadoProceso), default=EstadoProceso.pendiente, nullable=False)
+    prioridad = Column(SAEnum(PrioridadProceso), default=PrioridadProceso.media, nullable=False)
+    fecha_vencimiento = Column(TIMESTAMP, nullable=True)
     expediente_id = Column(Integer, ForeignKey("expedientes.id", ondelete="SET NULL"), nullable=True)
     creador_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     fecha_creacion = Column(TIMESTAMP, server_default=func.now())
@@ -46,6 +54,7 @@ class Subtarea(Base):
     proceso_id = Column(Integer, ForeignKey("procesos.id", ondelete="CASCADE"), nullable=False)
     titulo = Column(String(200), nullable=False)
     completada = Column(Boolean, default=False)
+    fecha_vencimiento = Column(TIMESTAMP, nullable=True)
     fecha_creacion = Column(TIMESTAMP, server_default=func.now())
 
     # Relationships

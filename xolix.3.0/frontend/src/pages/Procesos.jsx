@@ -10,6 +10,35 @@ const ESTADOS = {
   terminado: { label: 'Terminado', class: 'badge-active' },
 };
 
+const PRIORIDADES = {
+  alta: { label: '🔴 Alta', class: 'badge-danger', color: '#e53935' },
+  media: { label: '🟡 Media', class: 'badge-warning', color: '#f9a825' },
+  baja: { label: '🟢 Baja', class: 'badge-success', color: '#4caf50' },
+};
+
+function formatDate(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function getDaysLeft(dateStr) {
+  if (!dateStr) return null;
+  const now = new Date();
+  const target = new Date(dateStr);
+  const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+  return diff;
+}
+
+function getDeadlineBadge(dateStr) {
+  const days = getDaysLeft(dateStr);
+  if (days === null) return null;
+  if (days < 0) return { text: `Vencido (${Math.abs(days)}d)`, color: '#e53935', bg: 'var(--danger-bg)' };
+  if (days === 0) return { text: 'Vence hoy', color: '#f9a825', bg: 'var(--warning-bg)' };
+  if (days <= 3) return { text: `${days}d restantes`, color: '#f9a825', bg: 'var(--warning-bg)' };
+  return { text: `${days}d restantes`, color: '#4caf50', bg: 'var(--success-bg)' };
+}
+
 export default function Procesos() {
   const navigate = useNavigate();
   const [procesos, setProcesos] = useState([]);
@@ -21,6 +50,8 @@ export default function Procesos() {
   const [desc, setDesc] = useState('');
   const [expedienteId, setExpedienteId] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [prioridad, setPrioridad] = useState('media');
+  const [fechaVencimiento, setFechaVencimiento] = useState('');
   
   // Data for Selects
   const [usuariosDisp, setUsuariosDisp] = useState([]);
@@ -28,6 +59,7 @@ export default function Procesos() {
 
   // Subtask & Delete States
   const [newSubtarea, setNewSubtarea] = useState('');
+  const [newSubFecha, setNewSubFecha] = useState('');
   const [deleteTarget, setDeleteTarget] = useState(null);
 
   useEffect(() => { 
@@ -38,16 +70,15 @@ export default function Procesos() {
     try {
       const data = await api.getProcesos();
       setProcesos(data);
-      // Reload selected item if it exists so we get fresh data
       if (selected) {
-        selectProceso(selected.id);
+        const fresh = await api.getProceso(selected.id);
+        setSelected(fresh);
       }
     } catch {}
   }
 
   async function openCreateModal() {
     try {
-      // Parallel fetch users and expedientes
       const [uRes, eRes] = await Promise.all([
         api.getUsers(),
         api.getExpedientesPropios()
@@ -57,6 +88,7 @@ export default function Procesos() {
       
       setTitulo(''); setDesc('');
       setExpedienteId(''); setSelectedUsers([]);
+      setPrioridad('media'); setFechaVencimiento('');
       setShowCreate(true);
     } catch (err) {
       alert("Error cargando dependencias para crear proceso.");
@@ -78,7 +110,9 @@ export default function Procesos() {
         titulo, 
         descripcion: desc || null, 
         expediente_id: expedienteId ? parseInt(expedienteId) : null,
-        usuario_ids: selectedUsers 
+        usuario_ids: selectedUsers,
+        prioridad,
+        fecha_vencimiento: fechaVencimiento || null,
       });
       setShowCreate(false);
       loadProcesos();
@@ -98,16 +132,17 @@ export default function Procesos() {
     e.preventDefault();
     if (!newSubtarea.trim() || !selected) return;
     try {
-      await api.addSubtarea(selected.id, newSubtarea);
+      await api.addSubtarea(selected.id, newSubtarea, newSubFecha || null);
       setNewSubtarea('');
-      loadProcesos(); // also reloads selected implicitly via loadProcesos
+      setNewSubFecha('');
+      loadProcesos();
     } catch {}
   }
 
   async function handleToggleSubtarea(subtareaId) {
     try {
       await api.toggleSubtarea(subtareaId);
-      loadProcesos(); // updates progress globally and for selected
+      loadProcesos();
     } catch {}
   }
 
@@ -140,26 +175,41 @@ export default function Procesos() {
               <div className="status-msg">No estás participando en ningún proceso.</div>
             ) : (
               <div className="proceso-items">
-                {procesos.map(p => (
-                  <div key={p.id} className={`proceso-item ${selected?.id === p.id ? 'selected' : ''}`} onClick={() => selectProceso(p.id)}>
-                    <div className="proceso-item-header">
-                      <strong>{p.titulo}</strong>
-                      <span className={`badge ${ESTADOS[p.estado]?.class || ''}`}>{ESTADOS[p.estado]?.label || p.estado}</span>
+                {procesos.map(p => {
+                  const prio = PRIORIDADES[p.prioridad] || PRIORIDADES.media;
+                  const deadline = getDeadlineBadge(p.fecha_vencimiento);
+                  return (
+                    <div key={p.id} className={`proceso-item ${selected?.id === p.id ? 'selected' : ''}`} onClick={() => selectProceso(p.id)}>
+                      <div className="proceso-item-header">
+                        <strong>{p.titulo}</strong>
+                        <span className={`badge ${ESTADOS[p.estado]?.class || ''}`}>{ESTADOS[p.estado]?.label || p.estado}</span>
+                      </div>
+                      {/* Priority and Deadline row */}
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '6px', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', background: prio.color + '20', color: prio.color, fontWeight: 600 }}>
+                          {prio.label}
+                        </span>
+                        {deadline && (
+                          <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', background: deadline.bg, color: deadline.color, fontWeight: 500 }}>
+                            📅 {deadline.text}
+                          </span>
+                        )}
+                      </div>
+                      {/* Progress Bar Mini */}
+                      <div className="progress-bar" style={{ height: '4px', margin: '8px 0 4px 0' }}>
+                        <div className="progress-fill" style={{ width: `${p.progreso}%`, background: p.progreso === 100 ? '#4CAF50' : 'var(--primary)' }}></div>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span className="progress-text">{p.progreso}% completado</span>
+                      </div>
                     </div>
-                    {/* Progress Bar Mini */}
-                    <div className="progress-bar" style={{ height: '4px', margin: '8px 0 4px 0' }}>
-                      <div className="progress-fill" style={{ width: `${p.progreso}%`, background: p.progreso === 100 ? '#4CAF50' : '#4f46e5' }}></div>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span className="progress-text">{p.progreso}% completado</span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
 
-          {/* RIGHT PANEL: Process Detail (To-Do List Style) */}
+          {/* RIGHT PANEL: Process Detail */}
           <div className="table-card proceso-detail">
             {!selected ? (
               <div className="status-msg" style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -169,7 +219,7 @@ export default function Procesos() {
               <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 
                 {/* Header Info */}
-                <div style={{ paddingBottom: '16px', borderBottom: '1px solid var(--border-color)', marginBottom: '16px' }}>
+                <div style={{ paddingBottom: '16px', borderBottom: '1px solid var(--border)', marginBottom: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <h3 style={{ marginBottom:'8px', fontSize: '1.2rem' }}>{selected.titulo}</h3>
                     <button className="btn-sm btn-delete" onClick={() => setDeleteTarget(selected.id)}>Eliminar</button>
@@ -177,10 +227,30 @@ export default function Procesos() {
                   
                   {selected.descripcion && <p className="subtitle" style={{marginBottom:'12px'}}>{selected.descripcion}</p>}
                   
+                  {/* Priority & Deadline Info */}
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap' }}>
+                    {(() => {
+                      const prio = PRIORIDADES[selected.prioridad] || PRIORIDADES.media;
+                      return (
+                        <span style={{ fontSize: '12px', padding: '4px 12px', borderRadius: '8px', background: prio.color + '20', color: prio.color, fontWeight: 600 }}>
+                          Prioridad: {prio.label}
+                        </span>
+                      );
+                    })()}
+                    {selected.fecha_vencimiento && (() => {
+                      const dl = getDeadlineBadge(selected.fecha_vencimiento);
+                      return (
+                        <span style={{ fontSize: '12px', padding: '4px 12px', borderRadius: '8px', background: dl.bg, color: dl.color, fontWeight: 500 }}>
+                          📅 Entrega: {formatDate(selected.fecha_vencimiento)} — {dl.text}
+                        </span>
+                      );
+                    })()}
+                  </div>
+
                   {selected.expediente_nombre && (
                     <div style={{ marginBottom: '8px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span title="Expediente Relacionado">📁</span>
-                      <strong style={{ color: 'var(--primary-color)' }}>{selected.expediente_nombre}</strong>
+                      <strong style={{ color: 'var(--primary)' }}>{selected.expediente_nombre}</strong>
                     </div>
                   )}
 
@@ -201,7 +271,7 @@ export default function Procesos() {
                   </div>
                   
                   <div className="progress-bar" style={{ marginTop: '12px', height: '6px' }}>
-                    <div className="progress-fill" style={{ width: `${selected.progreso}%`, background: selected.progreso === 100 ? '#4CAF50' : '#4f46e5' }}></div>
+                    <div className="progress-fill" style={{ width: `${selected.progreso}%`, background: selected.progreso === 100 ? '#4CAF50' : 'var(--primary)' }}></div>
                   </div>
                 </div>
 
@@ -214,31 +284,61 @@ export default function Procesos() {
                   {selected.subtareas.length === 0 ? (
                     <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>No hay subtareas. Agrega una abajo.</p>
                   ) : (
-                    selected.subtareas.map(s => (
-                      <label key={s.id} className={`subtarea-item ${s.completada ? 'done' : ''}`} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', background: 'var(--bg-card)', borderRadius: '8px', marginBottom: '8px', border: '1px solid var(--border-color)', transition: 'all 0.2s ease' }}>
-                        <input 
-                          type="checkbox" 
-                          checked={s.completada} 
-                          onChange={() => handleToggleSubtarea(s.id)} 
-                          style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-                        />
-                        <span style={{ fontSize: '15px', color: s.completada ? 'var(--text-muted)' : 'var(--text-main)', textDecoration: s.completada ? 'line-through' : 'none' }}>
-                          {s.titulo}
-                        </span>
-                      </label>
-                    ))
+                    selected.subtareas.map(s => {
+                      const subDl = getDeadlineBadge(s.fecha_vencimiento);
+                      return (
+                        <label key={s.id} className={`subtarea-item ${s.completada ? 'done' : ''}`} style={{ 
+                          cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', 
+                          background: 'var(--bg-light)', borderRadius: '8px', marginBottom: '8px', 
+                          border: `1px solid ${subDl && subDl.color === '#e53935' && !s.completada ? '#e5393555' : 'var(--border)'}`,
+                          transition: 'all 0.2s ease',
+                          opacity: s.completada ? 0.6 : 1,
+                        }}>
+                          <input 
+                            type="checkbox" 
+                            checked={s.completada} 
+                            onChange={() => handleToggleSubtarea(s.id)} 
+                            style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--primary)' }}
+                          />
+                          <div style={{ flex: 1 }}>
+                            <span style={{ fontSize: '14px', color: s.completada ? 'var(--text-muted)' : 'var(--text-primary)', textDecoration: s.completada ? 'line-through' : 'none' }}>
+                              {s.titulo}
+                            </span>
+                            {subDl && !s.completada && (
+                              <div style={{ marginTop: '4px' }}>
+                                <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '4px', background: subDl.bg, color: subDl.color, fontWeight: 500 }}>
+                                  📅 {subDl.text}
+                                  {s.fecha_vencimiento && ` · ${formatDate(s.fecha_vencimiento)}`}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </label>
+                      );
+                    })
                   )}
                 </div>
 
-                {/* Add new subtask form pinned to bottom */}
-                <form onSubmit={handleAddSubtarea} className="subtarea-form" style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '10px' }}>
-                  <input 
-                    placeholder="Escribe una nueva subtarea..." 
-                    value={newSubtarea} 
-                    onChange={e => setNewSubtarea(e.target.value)} 
-                    style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid var(--border-color)', outline: 'none' }}
-                  />
-                  <button type="submit" className="btn btn-primary" style={{padding:'10px 20px', whiteSpace:'nowrap', borderRadius: '8px'}}>+ Agregar</button>
+                {/* Add new subtask form */}
+                <form onSubmit={handleAddSubtarea} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--border)' }}>
+                  <div style={{ display: 'flex', gap: '10px', marginBottom: '8px' }}>
+                    <input 
+                      placeholder="Escribe una nueva subtarea..." 
+                      value={newSubtarea} 
+                      onChange={e => setNewSubtarea(e.target.value)} 
+                      style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', outline: 'none', background: 'var(--bg-light)', color: 'var(--text-primary)' }}
+                    />
+                    <button type="submit" className="btn btn-primary" style={{padding:'10px 20px', whiteSpace:'nowrap', borderRadius: '8px'}}>+ Agregar</button>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <label style={{ fontSize: '12px', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>📅 Fecha límite:</label>
+                    <input 
+                      type="datetime-local" 
+                      value={newSubFecha} 
+                      onChange={e => setNewSubFecha(e.target.value)} 
+                      style={{ flex: 1, padding: '8px', borderRadius: '8px', border: '1px solid var(--border)', fontSize: '12px', background: 'var(--bg-light)', color: 'var(--text-primary)' }}
+                    />
+                  </div>
                 </form>
 
               </div>
@@ -266,23 +366,44 @@ export default function Procesos() {
                   placeholder="Detalles sobre el proceso..." 
                   value={desc} 
                   onChange={e => setDesc(e.target.value)} 
-                  style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', minHeight: '80px', resize: 'vertical', fontFamily: 'inherit' }}
+                  style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)', minHeight: '80px', resize: 'vertical', fontFamily: 'inherit', background: 'var(--bg-light)', color: 'var(--text-primary)' }}
                 />
+              </div>
+
+              {/* Priority & Deadline Row */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="field-group">
+                  <label className="field-label">PRIORIDAD</label>
+                  <select value={prioridad} onChange={e => setPrioridad(e.target.value)} style={{ background: 'var(--bg-light)', color: 'var(--text-primary)' }}>
+                    <option value="baja">🟢 Baja</option>
+                    <option value="media">🟡 Media</option>
+                    <option value="alta">🔴 Alta</option>
+                  </select>
+                </div>
+                <div className="field-group">
+                  <label className="field-label">FECHA DE ENTREGA</label>
+                  <input 
+                    type="datetime-local" 
+                    value={fechaVencimiento} 
+                    onChange={e => setFechaVencimiento(e.target.value)}
+                    style={{ background: 'var(--bg-light)', color: 'var(--text-primary)' }}
+                  />
+                </div>
               </div>
 
               <div className="field-group">
                 <label className="field-label">VINCULAR EXPEDIENTE (Opcional)</label>
-                <select value={expedienteId} onChange={e => setExpedienteId(e.target.value)}>
+                <select value={expedienteId} onChange={e => setExpedienteId(e.target.value)} style={{ background: 'var(--bg-light)', color: 'var(--text-primary)' }}>
                   <option value="">-- No vincular ninguno --</option>
                   {expedientesDisp.map(exp => (
-                    <option key={exp.id} value={exp.id}>{exp.titulo}</option>
+                    <option key={exp.id} value={exp.id}>{exp.nombre}</option>
                   ))}
                 </select>
               </div>
 
               <div className="field-group" style={{ marginTop: '8px' }}>
                 <label className="field-label">COMPARTIR CON (Opcional)</label>
-                <div style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '8px' }}>
+                <div style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid var(--border)', borderRadius: '8px', padding: '8px' }}>
                   {usuariosDisp.map(u => (
                     <label key={u.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px', cursor: 'pointer' }}>
                       <input 
