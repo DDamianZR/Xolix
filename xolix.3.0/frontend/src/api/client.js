@@ -140,6 +140,61 @@ const api = {
     request(`/procesos/${id}`, {
       method: 'DELETE',
     }),
+
+  // Casos (Case Management)
+  getCasos: () => request('/casos/'),
+  getCaso: (id) => request(`/casos/${id}`),
+  createCaso: (data) =>
+    request('/casos/', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  updateCaso: (id, data) =>
+    request(`/casos/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+  deleteCaso: (id) =>
+    request(`/casos/${id}`, {
+      method: 'DELETE',
+    }),
+
+  // Caso Notas
+  createNota: (casoId, data) =>
+    request(`/casos/${casoId}/notas`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  editNota: (notaId, data) =>
+    request(`/casos/notas/${notaId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+
+  // Caso Documentos
+  uploadDocumentoCaso: (casoId, formData) =>
+    request(`/casos/${casoId}/documentos`, {
+      method: 'POST',
+      body: formData,
+    }),
+
+  // Caso Participantes
+  addParticipante: (casoId, data) =>
+    request(`/casos/${casoId}/participantes`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  removeParticipante: (casoId, userId) =>
+    request(`/casos/${casoId}/participantes/${userId}`, {
+      method: 'DELETE',
+    }),
+
+  // Caso Hecho Victimal
+  updateHechoVictimal: (casoId, data) =>
+    request(`/casos/${casoId}/hecho-victimal`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
 };
 
 export default api;

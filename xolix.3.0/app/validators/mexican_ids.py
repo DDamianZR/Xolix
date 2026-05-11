@@ -79,7 +79,7 @@ def validar_curp_fecha(curp: str, fecha_nacimiento: date) -> tuple[bool, str]:
     """Valida que la fecha de nacimiento en la CURP coincida con la proporcionada."""
     curp = curp.strip().upper()
 
-    if len(curp) < 10:
+    if len(curp) < 18:
         return False, "CURP demasiado corta para extraer fecha"
 
     # Extraer fecha de CURP (posiciones 4-9)
@@ -87,8 +87,13 @@ def validar_curp_fecha(curp: str, fecha_nacimiento: date) -> tuple[bool, str]:
     mes_curp = int(curp[6:8])
     dia_curp = int(curp[8:10])
 
-    # Determinar siglo: si el año es > 30 asumimos 1900s, sino 2000s
-    siglo = 1900 if anio_curp > 30 else 2000
+    # El carácter 17 (índice 16) determina el siglo:
+    # 0-9 para fechas de nacimiento hasta 1999
+    # A-Z para fechas a partir del 2000
+    if curp[16].isdigit():
+        siglo = 1900
+    else:
+        siglo = 2000
     anio_completo = siglo + anio_curp
 
     if (

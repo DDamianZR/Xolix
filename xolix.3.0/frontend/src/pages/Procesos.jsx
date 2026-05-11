@@ -62,10 +62,6 @@ export default function Procesos() {
   const [newSubFecha, setNewSubFecha] = useState('');
   const [deleteTarget, setDeleteTarget] = useState(null);
 
-  useEffect(() => { 
-    loadProcesos(); 
-  }, []);
-
   async function loadProcesos() {
     try {
       const data = await api.getProcesos();
@@ -74,8 +70,12 @@ export default function Procesos() {
         const fresh = await api.getProceso(selected.id);
         setSelected(fresh);
       }
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   }
+
+  useEffect(() => { loadProcesos(); }, []);
 
   async function openCreateModal() {
     try {
@@ -90,7 +90,7 @@ export default function Procesos() {
       setExpedienteId(''); setSelectedUsers([]);
       setPrioridad('media'); setFechaVencimiento('');
       setShowCreate(true);
-    } catch (err) {
+    } catch {
       alert("Error cargando dependencias para crear proceso.");
     }
   }
@@ -125,7 +125,9 @@ export default function Procesos() {
     try {
       const data = await api.getProceso(id);
       setSelected(data);
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async function handleAddSubtarea(e) {
@@ -136,14 +138,18 @@ export default function Procesos() {
       setNewSubtarea('');
       setNewSubFecha('');
       loadProcesos();
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async function handleToggleSubtarea(subtareaId) {
     try {
       await api.toggleSubtarea(subtareaId);
       loadProcesos();
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async function handleDelete() {
@@ -152,7 +158,9 @@ export default function Procesos() {
       setDeleteTarget(null);
       if (selected?.id === deleteTarget) setSelected(null);
       loadProcesos();
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (

@@ -22,7 +22,7 @@ export default function Dashboard() {
     try {
       const data = await api.getUsers();
       setUsuarios(data);
-    } catch (err) {
+    } catch {
       setError('Error al cargar usuarios.');
     } finally {
       setLoading(false);

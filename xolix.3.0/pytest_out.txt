@@ -1,0 +1,444 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-8.2.0, pluggy-1.6.0
+rootdir: C:\Users\damia\OneDrive - Instituto Politecnico Nacional\2026-2 (Quinto Semestre)\ADS\Xolix\xolix.3.0
+plugins: anyio-4.12.1
+collected 25 items
+
+tests\test_api.py EE..EEEEEEE.                                           [ 48%]
+tests\test_validators.py .............                                   [100%]
+
+=================================== ERRORS ====================================
+________________ ERROR at setup of TestAuth.test_login_success ________________
+
+client = <starlette.testclient.TestClient object at 0x000001B36D800440>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+____________ ERROR at setup of TestAuth.test_login_wrong_password _____________
+
+client = <starlette.testclient.TestClient object at 0x000001B36D9D0550>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+_________________ ERROR at setup of TestUsers.test_list_users _________________
+
+client = <starlette.testclient.TestClient object at 0x000001B36DAC09D0>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+________________ ERROR at setup of TestUsers.test_create_user _________________
+
+client = <starlette.testclient.TestClient object at 0x000001B36DA9A570>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+____________ ERROR at setup of TestUsers.test_create_user_underage ____________
+
+client = <starlette.testclient.TestClient object at 0x000001B36DB04490>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+_______________ ERROR at setup of TestUsers.test_get_user_by_id _______________
+
+client = <starlette.testclient.TestClient object at 0x000001B36D73F570>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+________________ ERROR at setup of TestUsers.test_update_user _________________
+
+client = <starlette.testclient.TestClient object at 0x000001B36D88E8B0>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+________________ ERROR at setup of TestUsers.test_delete_user _________________
+
+client = <starlette.testclient.TestClient object at 0x000001B36D88E250>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+_______________ ERROR at setup of TestUsers.test_user_not_found _______________
+
+client = <starlette.testclient.TestClient object at 0x000001B36D88EF10>
+
+    @pytest.fixture
+    def admin_token(client):
+        """Create an admin user and return a valid token."""
+        # Insert admin directly into DB
+        db = TestingSessionLocal()
+        from app.models.user import User
+        from datetime import date
+        admin = User(
+            nombre="Admin",
+            apellido_paterno="Test",
+            apellido_materno="Usuario",
+            rfc="ADMI850101AAA",
+            curp="ADMI850101HDFRRL09",
+            sexo="M",
+            fecha_nacimiento=date(1985, 1, 1),
+            edad=41,
+            estado="CDMX",
+            municipio="GAM",
+            colonia="Arag¾n",
+            calle="Avenida",
+            numero="123",
+            codigo_postal="07000",
+            calles_aledanas=None,
+            tipo_personal="empleado",
+            rol="director",
+            correo="admin@test.com",
+            password=hash_password("admin123"),
+            activo=True,
+        )
+        db.add(admin)
+        db.commit()
+        db.close()
+    
+        # Login
+        res = client.post("/api/auth/login", json={
+            "correo": "admin@test.com",
+            "password": "admin123"
+        })
+>       assert res.status_code == 200
+E       assert 401 == 200
+E        +  where 401 = <Response [401 Unauthorized]>.status_code
+
+tests\test_api.py:83: AssertionError
+=========================== short test summary info ===========================
+ERROR tests/test_api.py::TestAuth::test_login_success - assert 401 == 200
+ERROR tests/test_api.py::TestAuth::test_login_wrong_password - assert 401 == 200
+ERROR tests/test_api.py::TestUsers::test_list_users - assert 401 == 200
+ERROR tests/test_api.py::TestUsers::test_create_user - assert 401 == 200
+ERROR tests/test_api.py::TestUsers::test_create_user_underage - assert 401 ==...
+ERROR tests/test_api.py::TestUsers::test_get_user_by_id - assert 401 == 200
+ERROR tests/test_api.py::TestUsers::test_update_user - assert 401 == 200
+ERROR tests/test_api.py::TestUsers::test_delete_user - assert 401 == 200
+ERROR tests/test_api.py::TestUsers::test_user_not_found - assert 401 == 200
+======================== 16 passed, 9 errors in 5.85s =========================

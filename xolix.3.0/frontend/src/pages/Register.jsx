@@ -37,6 +37,7 @@ export default function Register() {
     setForm(prev => ({ ...prev, [name]: name === 'rfc' || name === 'curp' ? value.toUpperCase() : value }));
   }
 
+
   useEffect(() => {
     if (form.codigo_postal && form.codigo_postal.length === 5) {
       handleCPFetch(form.codigo_postal);
@@ -50,7 +51,7 @@ export default function Register() {
     setMensaje('');
     try {
       // Fetch SEPOMEX data
-        const res = await api.client.get(`/sepomex/cp/${form.codigo_postal}`);
+        const res = await api.client.get(`/sepomex/cp/${cp}`);
         const data = res.data;
         setForm(prev => ({
           ...prev,
@@ -59,7 +60,7 @@ export default function Register() {
           colonia: data.colonias.length === 1 ? data.colonias[0] : ''
         }));
         setColonias(data.colonias);
-      } catch (err) {
+      } catch {
         setColonias([]);
         setMensaje('No se encontró el código postal.');
         setMsgColor('error');

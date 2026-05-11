@@ -1,0 +1,29 @@
+
+> frontend@0.0.0 lint
+> eslint .
+
+
+C:\Users\damia\OneDrive - Instituto Politecnico Nacional\2026-2 (Quinto Semestre)\ADS\Xolix\xolix.3.0\frontend\src\pages\Expedientes.jsx
+  72:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  70 |   }
+  71 |
+> 72 |   useEffect(() => { loadCasos(); }, []);
+     |                     ^^^^^^^^^ Avoid calling setState() directly within an effect
+  73 |
+  74 |   function resetForm() {
+  75 |     setTitulo(''); setDesc(''); setEstado('activo'); setNivelRiesgo('medio');  react-hooks/set-state-in-effect
+
+C:\Users\damia\OneDrive - Instituto Politecnico Nacional\2026-2 (Quinto Semestre)\ADS\Xolix\xolix.3.0\frontend\src\pages\Procesos.jsx
+  78:3  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+  81:6  warning  React Hook useEffect has a missing dependency: 'loadProcesos'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Ô£û 3 problems (1 error, 2 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

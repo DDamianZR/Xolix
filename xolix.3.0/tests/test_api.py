@@ -70,6 +70,7 @@ def admin_token(client):
         correo="admin@test.com",
         password=hash_password("admin123"),
         activo=True,
+        verificado=True,
     )
     db.add(admin)
     db.commit()
@@ -153,7 +154,7 @@ class TestUsers:
             "apellido_paterno": "Test",
             "apellido_materno": "López",
             "rfc": "METE150101AAA",
-            "curp": "METE150101HDFRRL09",
+            "curp": "METE150101HDFRRLA9",
             "sexo": "M",
             "fecha_nacimiento": "2015-01-01",
             "estado": "CDMX",

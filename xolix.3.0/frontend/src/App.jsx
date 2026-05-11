@@ -9,6 +9,7 @@ import UserDetail from './pages/UserDetail';
 import UserEdit from './pages/UserEdit';
 import Expedientes from './pages/Expedientes';
 import Procesos from './pages/Procesos';
+import CasoDetalle from './pages/CasoDetalle';
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/editar/:id" element={<ProtectedRoute><UserEdit /></ProtectedRoute>} />
           <Route path="/expedientes" element={<ProtectedRoute><Expedientes /></ProtectedRoute>} />
           <Route path="/procesos" element={<ProtectedRoute><Procesos /></ProtectedRoute>} />
+          <Route path="/casos/:id" element={<ProtectedRoute><CasoDetalle /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

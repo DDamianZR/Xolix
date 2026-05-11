@@ -1,0 +1,44 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-8.2.0, pluggy-1.6.0
+rootdir: C:\Users\damia\OneDrive - Instituto Politecnico Nacional\2026-2 (Quinto Semestre)\ADS\Xolix\xolix.3.0
+plugins: anyio-4.12.1
+collected 25 items
+
+tests\test_api.py ......F.....                                           [ 48%]
+tests\test_validators.py .............                                   [100%]
+
+================================== FAILURES ===================================
+_____________________ TestUsers.test_create_user_underage _____________________
+
+self = <test_api.TestUsers object at 0x00000263BF33FE10>
+client = <starlette.testclient.TestClient object at 0x00000263BF463350>
+admin_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbCI6ImRpcmVjdG9yIiwidXNlcl9pZCI6MSwiZXhwIjoxNzc0NTUwMjYyfQ.uRizBknAgqyZnwo2ZH2wagvwY-lEGk0Dfu-TLctuuyE'
+
+    def test_create_user_underage(self, client, admin_token):
+        res = client.post("/api/usuarios/", json={
+            "nombre": "Menor",
+            "apellido_paterno": "Test",
+            "apellido_materno": "L¾pez",
+            "rfc": "METE150101AAA",
+            "curp": "METE150101HDFRRL09",
+            "sexo": "M",
+            "fecha_nacimiento": "2015-01-01",
+            "estado": "CDMX",
+            "municipio": "GAM",
+            "colonia": "Arag¾n",
+            "calle": "Avenida",
+            "numero": "123",
+            "codigo_postal": "07000",
+            "tipo_personal": "empleado",
+            "rol": "analista",
+            "correo": "menor@test.com",
+            "password": "password123"
+        }, headers={"Authorization": f"Bearer {admin_token}"})
+        assert res.status_code == 400
+>       assert "mayor de 18" in res.json()["detail"]
+E       AssertionError: assert 'mayor de 18' in 'La fecha de nacimiento no coincide con la CURP'
+
+tests\test_api.py:172: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_api.py::TestUsers::test_create_user_underage - AssertionErr...
+======================== 1 failed, 24 passed in 6.89s =========================
