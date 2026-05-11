@@ -4,14 +4,14 @@ Sistema web completo para la gestión del personal de una fundación. Incluye ge
 
 ## 🛠 Tecnologías
 
-| Componente | Tecnología |
-|---|---|
-| **Backend** | FastAPI + SQLAlchemy + Pydantic v2 |
-| **Frontend** | React + Vite + React Router |
-| **Base de datos** | PostgreSQL 14+ |
-| **Autenticación** | JWT (python-jose) + bcrypt |
-| **Validaciones** | RFC, CURP, Email (con validación cruzada) |
-| **API Postal** | zippopotam.us (autocompletado por código postal) |
+| Componente        | Tecnología                                       |
+| ----------------- | ------------------------------------------------ |
+| **Backend**       | FastAPI + SQLAlchemy + Pydantic v2               |
+| **Frontend**      | React + Vite + React Router                      |
+| **Base de datos** | PostgreSQL 14+                                   |
+| **Autenticación** | JWT (python-jose) + bcrypt                       |
+| **Validaciones**  | RFC, CURP, Email (con validación cruzada)        |
+| **API Postal**    | zippopotam.us (autocompletado por código postal) |
 
 ---
 
@@ -156,6 +156,7 @@ INSERT INTO users (
 ```
 
 **Credenciales de prueba:**
+
 - Correo: `director@xolix.com`
 - Contraseña: `admin123`
 
@@ -163,25 +164,25 @@ INSERT INTO users (
 
 ## 📋 Flujo del Sistema
 
-| Pantalla | Ruta | Descripción |
-|---|---|---|
-| Login | `/` | Inicio de sesión |
-| Dashboard | `/dashboard` | Panel principal con accesos rápidos |
-| Registro | `/registro` | Registrar nuevo personal |
-| Detalle | `/usuario/:id` | Ver datos completos |
-| Editar | `/editar/:id` | Modificar datos |
-| Expedientes | `/expedientes` | Gestión de archivos PDF |
-| Procesos | `/procesos` | Task manager con subtareas |
+| Pantalla    | Ruta           | Descripción                         |
+| ----------- | -------------- | ----------------------------------- |
+| Login       | `/`            | Inicio de sesión                    |
+| Dashboard   | `/dashboard`   | Panel principal con accesos rápidos |
+| Registro    | `/registro`    | Registrar nuevo personal            |
+| Detalle     | `/usuario/:id` | Ver datos completos                 |
+| Editar      | `/editar/:id`  | Modificar datos                     |
+| Expedientes | `/expedientes` | Gestión de archivos PDF             |
+| Procesos    | `/procesos`    | Task manager con subtareas          |
 
 ### Permisos por rol
 
-| Acción | Director | Coordinador | Otros |
-|---|---|---|---|
-| Ver listado | ✅ | ✅ | ✅ |
-| Registrar personal | ✅ | ✅ | ❌ |
-| Editar / Eliminar | ✅ | ✅ | ❌ |
-| Expedientes | ✅ | ✅ | ✅ |
-| Procesos | ✅ | ✅ | ✅ |
+| Acción             | Director | Coordinador | Otros |
+| ------------------ | -------- | ----------- | ----- |
+| Ver listado        | ✅       | ✅          | ✅    |
+| Registrar personal | ✅       | ✅          | ❌    |
+| Editar / Eliminar  | ✅       | ✅          | ❌    |
+| Expedientes        | ✅       | ✅          | ✅    |
+| Procesos           | ✅       | ✅          | ✅    |
 
 ---
 
@@ -196,24 +197,39 @@ python -m pytest tests/ -v
 ## 📡 API (Documentación automática)
 
 Con el servidor corriendo:
+
 - **Swagger UI:** http://localhost:8000/docs
 - **ReDoc:** http://localhost:8000/redoc
 
 ### Endpoints principales
 
-| Método | Ruta | Descripción |
-|---|---|---|
-| `POST` | `/api/auth/login` | Login con JWT |
-| `GET` | `/api/usuarios/` | Listar usuarios |
-| `POST` | `/api/usuarios/` | Crear usuario |
-| `PUT` | `/api/usuarios/{id}` | Actualizar usuario |
-| `DELETE` | `/api/usuarios/{id}` | Eliminar usuario |
-| `GET` | `/api/sepomex/cp/{cp}` | Autocompletado por CP |
-| `POST` | `/api/expedientes/` | Subir expediente |
-| `GET` | `/api/expedientes/propios` | Mis expedientes |
-| `GET` | `/api/expedientes/compartidos` | Expedientes compartidos |
-| `POST` | `/api/expedientes/{id}/compartir` | Compartir expediente |
-| `POST` | `/api/procesos/` | Crear proceso |
-| `GET` | `/api/procesos/` | Mis procesos |
-| `POST` | `/api/procesos/{id}/subtareas` | Agregar subtarea |
-| `PATCH` | `/api/procesos/subtareas/{id}/toggle` | Toggle subtarea |
+| Método   | Ruta                                  | Descripción             |
+| -------- | ------------------------------------- | ----------------------- |
+| `POST`   | `/api/auth/login`                     | Login con JWT           |
+| `GET`    | `/api/usuarios/`                      | Listar usuarios         |
+| `POST`   | `/api/usuarios/`                      | Crear usuario           |
+| `PUT`    | `/api/usuarios/{id}`                  | Actualizar usuario      |
+| `DELETE` | `/api/usuarios/{id}`                  | Eliminar usuario        |
+| `GET`    | `/api/sepomex/cp/{cp}`                | Autocompletado por CP   |
+| `POST`   | `/api/expedientes/`                   | Subir expediente        |
+| `GET`    | `/api/expedientes/propios`            | Mis expedientes         |
+| `GET`    | `/api/expedientes/compartidos`        | Expedientes compartidos |
+| `POST`   | `/api/expedientes/{id}/compartir`     | Compartir expediente    |
+| `POST`   | `/api/procesos/`                      | Crear proceso           |
+| `GET`    | `/api/procesos/`                      | Mis procesos            |
+| `POST`   | `/api/procesos/{id}/subtareas`        | Agregar subtarea        |
+| `PATCH`  | `/api/procesos/subtareas/{id}/toggle` | Toggle subtarea         |
+
+## EjecutarBackend
+
+```bash
+venv\Scripts\activate
+venv\Scripts\python.exe -m uvicorn app.main:app --reload
+```
+
+## Ejecutar Frontend
+
+```bash
+cd frontend
+npm run dev
+```
