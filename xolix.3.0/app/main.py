@@ -12,8 +12,9 @@ from app.models.user import User  # noqa: F401
 from app.models.expediente import Expediente, ExpedienteCompartido  # noqa: F401
 from app.models.proceso import Proceso, Subtarea  # noqa: F401
 from app.models.caso import Caso, HechoVictimal, CasoParticipante, NotaCaso, DocumentoCaso  # noqa: F401
+from app.models.nna import CasoNNA, EntrevistaFamilia, PersonaFamiliar, Familiograma, ObservacionNoVerbal # noqa: F401
 
-from app.routers import auth, users, sepomex, expedientes, procesos, casos
+from app.routers import auth, users, sepomex, expedientes, procesos, casos, nna
 
 settings = get_settings()
 
@@ -47,6 +48,7 @@ app.include_router(sepomex.router)
 app.include_router(expedientes.router)
 app.include_router(procesos.router)
 app.include_router(casos.router)
+app.include_router(nna.router)
 
 
 @app.get("/api/health")

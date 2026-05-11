@@ -195,6 +195,39 @@ const api = {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
+
+  // --- Protección NNA ---
+  getNnaCasos: () => request('/nna/casos'),
+  getNnaCaso: (id) => request(`/nna/casos/${id}`),
+  createNnaCaso: (data) =>
+    request('/nna/casos', { method: 'POST', body: JSON.stringify(data) }),
+  updateNnaCaso: (id, data) =>
+    request(`/nna/casos/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteNnaCaso: (id) => request(`/nna/casos/${id}`, { method: 'DELETE' }),
+
+  getNnaEntrevista: (casoId) => request(`/nna/casos/${casoId}/entrevista`),
+  saveNnaEntrevista: (casoId, data) =>
+    request(`/nna/casos/${casoId}/entrevista`, { method: 'POST', body: JSON.stringify(data) }),
+
+  getNnaPersonas: (casoId) => request(`/nna/casos/${casoId}/personas`),
+  createNnaPersona: (casoId, data) =>
+    request(`/nna/casos/${casoId}/personas`, { method: 'POST', body: JSON.stringify(data) }),
+  updateNnaPersona: (casoId, personaId, data) =>
+    request(`/nna/casos/${casoId}/personas/${personaId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteNnaPersona: (casoId, personaId) =>
+    request(`/nna/casos/${casoId}/personas/${personaId}`, { method: 'DELETE' }),
+
+  getNnaFamiliograma: (casoId) => request(`/nna/casos/${casoId}/familiograma`),
+  saveNnaFamiliograma: (casoId, data) =>
+    request(`/nna/casos/${casoId}/familiograma`, { method: 'POST', body: JSON.stringify(data) }),
+
+  getNnaObservaciones: (casoId) => request(`/nna/casos/${casoId}/observaciones`),
+  createNnaObservacion: (casoId, data) =>
+    request(`/nna/casos/${casoId}/observaciones`, { method: 'POST', body: JSON.stringify(data) }),
+
+  getNnaPlanAccion: (casoId) => request(`/nna/casos/${casoId}/plan-accion`),
+  generateNnaPlanAccion: (casoId) =>
+    request(`/nna/casos/${casoId}/plan-accion`, { method: 'POST' }),
 };
 
 export default api;

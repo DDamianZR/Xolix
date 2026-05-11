@@ -74,6 +74,10 @@ export default function Dashboard() {
             <span className="quick-nav-icon">📋</span>
             <span className="quick-nav-text">Procesos</span>
           </div>
+          <div className="quick-nav-card" onClick={() => navigate('/nna')}>
+            <span className="quick-nav-icon">🛡️</span>
+            <span className="quick-nav-text">Protección NNA</span>
+          </div>
         </div>
 
         <div className="table-card">
