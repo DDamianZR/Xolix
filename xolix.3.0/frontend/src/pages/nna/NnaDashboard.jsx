@@ -28,6 +28,9 @@ export default function NnaDashboard() {
     <div className="page-dashboard">
       <Topbar />
       <div className="container">
+        <button className="btn btn-secondary" style={{ marginBottom: '16px' }} onClick={() => navigate('/dashboard')}>
+          ← Volver al Dashboard
+        </button>
         <div className="table-header">
           <h3>Módulo de Protección NNA</h3>
           <button className="btn btn-add" onClick={() => navigate('/nna/casos/nuevo')}>
