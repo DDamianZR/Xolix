@@ -1,0 +1,244 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% Márgenes amplios y limpios
+\geometry{
+  top=2.5cm,
+  bottom=2.5cm,
+  left=3cm,
+  right=3cm
+}
+
+% Colores institucionales
+\definecolor{ipnGuinda}{RGB}{108, 29, 69}
+\definecolor{tablaHeader}{RGB}{230, 230, 230}
+
+% Formato de títulos
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{ipnGuinda}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{ipnGuinda}}{\thesubsection}{1em}{}
+
+% Configuración de encabezados y pies de página
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{ipnGuinda}{\textbf{Análisis de Negocio}}}
+\fancyhead[R]{\small Módulo de Protección NNA}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{ipnGuinda}\leaders\hrule height \headrulewidth\hfill}}
+
+% Definición de comandos tipo CDT mejorados
+\newcommand{\cdtInstrucciones}[1]{}
+\newcommand{\cdtEmpty}{\vspace{-1em}}
+
+\newenvironment{Usuario}[2]{
+    \vspace{1.5em}\noindent\textcolor{ipnGuinda}{\textbf{\Large #1}}\par\noindent\textit{#2}\par\vspace{0.8em}
+    \begin{description}
+}{
+    \end{description}
+}
+
+\newenvironment{cdtEntidad}[2]{
+    \vspace{1.5em}\noindent\textcolor{ipnGuinda}{\textbf{\Large Entidad: #1 (\hypertarget{#1}{#2})}}\par\vspace{0.8em}
+    \renewcommand{\arraystretch}{1.3}
+    \tabularx{\textwidth}{|l|l|X|c|}
+    \hline
+    \rowcolor{tablaHeader}
+    \textbf{Atributo} & \textbf{Tipo} & \textbf{Descripción} & \textbf{Req.} \\
+    \hline
+}{
+    \endtabularx\vspace{1.5em}
+}
+
+\newcommand{\brAttr}[5]{
+    #2 & #3 & #4 & #5 \\
+    \hline
+}
+
+\newcommand{\cdtEntityRelSection}{
+    \rowcolor{tablaHeader}
+    \multicolumn{4}{|c|}{\textbf{Relaciones}} \\
+    \hline
+}
+
+\newcommand{\brRel}[3]{
+    \multicolumn{2}{|l|}{\textbf{#1}} & \multicolumn{2}{l|}{#3} \\
+    \hline
+}
+
+\newcommand{\brRelComposition}{Composición}
+\newcommand{\brRelAgregation}{Agregación}
+\newcommand{\brRelGeneralization}{Generalización}
+\newcommand{\brRelParticipation}{Asociación}
+
+\begin{document}
+\thispagestyle{empty} % sin número de página en la portada
+
+% --------- ENCABEZADO CON LOGOS ----------
+\begin{minipage}{0.49\linewidth}
+  \includegraphics[width=3cm]{C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/IPN.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.49\linewidth}
+  \flushright
+  \includegraphics[width=3cm]{C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/ESCOM.png}
+\end{minipage}
+
+
+% --------- CUERPO CENTRADO VERTICALMENTE ----------
+\begin{center}
+\vspace*{1cm} % espacio después de logos
+
+{\Large \textbf{Instituto Politécnico Nacional}} \\[0.2cm]
+{\large \textbf{Escuela Superior de Cómputo}} \\[1cm]
+
+{\large \textbf{Materia:}} \\[0.2cm]
+{\Large ANÁLISIS Y DISEÑO DE SISTEMAS} \\[1cm]
+
+{\Huge \textbf{Análisis de Negocio\\ Módulo de Protección NNA y Familiograma}} \\[0.7cm]
+\textcolor{ipnGuinda}{\rule{0.6\linewidth}{1.5pt}} \\[1cm]
+
+{\large \textbf{Profesor:}} \\[0.2cm]
+{\Large  Ulises Vélez Saldaña} \\[1cm]
+
+{\large \textbf{Alumno:}} \\[0.2cm]
+\begin{flushleft}
+\hspace{4cm} % sangría estética
+\begin{tabular}{ll}
+Canales Zendreros Diego Damian  \\ 
+Rueda Manzano, Jennifer \\
+\end{tabular}
+\end{flushleft}
+
+{\large \textbf{Grupo:}} \\[0.2cm]
+{\Large 4BV1} \\[1cm]
+
+{\large Ciudad de México, 12 de Mayo de 2026}
+
+\vfill % empuja hacia abajo el último bloque si sobra espacio
+\end{center}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+Este documento describe el modelo de negocio para el Módulo de Protección de Niñas, Niños y Adolescentes (NNA) y la herramienta de Familiograma dentro del sistema Xolix 3.0. Su propósito es definir los actores involucrados, los términos clave del negocio, el modelo de dominio del problema y las principales reglas de negocio aplicables a esta iteración.
+
+\section{Actores del sistema}
+
+\begin{Usuario}{\hypertarget{ADirector}{\subsection{Director}}}{
+        Máxima autoridad de la fundación, responsable de la supervisión global.
+    }
+    \item[Responsabilidades:] \cdtEmpty
+    \begin{itemize}
+        \item Supervisar todos los casos NNA activos e inactivos.
+        \item Eliminar casos NNA o registros del sistema en situaciones excepcionales.
+        \item Monitorear los planes de acción globales.
+    \end{itemize}
+    \item[Perfil:] \cdtEmpty
+    \begin{itemize}
+        \item Profesional en gestión de instituciones sociales o psicología clínica.
+    \end{itemize}
+    \item[Procesos en los que participa:] Gestión general de expedientes, Supervisión de Casos NNA.
+\end{Usuario}
+
+\begin{Usuario}{\hypertarget{ACoordinador}{\subsection{Coordinador / Psicólogo}}}{
+        Personal operativo especializado responsable del trato directo con los NNA y sus familias.
+    }
+    \item[Responsabilidades:] \cdtEmpty
+    \begin{itemize}
+        \item Registrar nuevos casos NNA.
+        \item Realizar y registrar entrevistas familiares.
+        \item Construir y mantener actualizado el familiograma del caso.
+        \item Registrar observaciones no verbales durante las sesiones.
+        \item Generar planes de acción basados en las entrevistas.
+    \end{itemize}
+    \item[Perfil:] \cdtEmpty
+    \begin{itemize}
+        \item Licenciatura en Psicología, Trabajo Social o afines.
+        \item Experiencia en trato con menores vulnerados.
+    \end{itemize}
+    \item[Procesos en los que participa:] Entrevistas de diagnóstico, Creación de Familiogramas, Planes de Acción.
+\end{Usuario}
+
+\section{Términos del Negocio}
+
+\begin{description}
+    \item[\hypertarget{tNNA}{NNA:}] Acrónimo de Niña, Niño o Adolescente. Sujeto principal de protección y atención de la fundación.
+    \item[\hypertarget{tCaso}{Caso NNA:}] Expediente integral que agrupa toda la información de un NNA específico, incluyendo sus datos personales, familiares, psicológicos y legales.
+    \item[\hypertarget{tFamiliograma}{Familiograma:}] Representación gráfica (grafo) interactiva del núcleo y la red familiar de un NNA. Muestra de manera visual a los individuos y la naturaleza de las relaciones entre ellos.
+    \item[\hypertarget{tPersonaFamiliar}{Persona Familiar:}] Individuo que pertenece al entorno (familiar, social o de cuidado) del NNA, registrado en el sistema con sus datos sociodemográficos y rol.
+    \item[\hypertarget{tRelacionFamiliar}{Relación Familiar:}] Vínculo específico entre dos Personas Familiares dentro de un caso. Puede ser de diversos tipos (biológica, legal, conflictiva, protectora, etc.) y tener direccionalidad.
+    \item[\hypertarget{tPlanAccion}{Plan de Acción:}] Conjunto de tareas y procesos generados (a menudo automáticamente según el nivel de negación) para dar seguimiento a un Caso NNA.
+\end{description}
+
+\section{Modelo del dominio del problema}
+
+A continuación se describen las entidades principales que conforman el modelo de datos del Módulo de Protección NNA y Familiograma.
+
+\begin{cdtEntidad}{CasoNNA}{Caso NNA}
+    \brAttr{nna\_nombre}{Nombre del NNA}{Cadena}{Nombre completo del NNA}{Sí}
+    \brAttr{nna\_edad}{Edad}{Entero}{Edad en años del NNA}{No}
+    \brAttr{nna\_genero}{Género}{Enum}{Masculino, Femenino, No Binario, Otro}{No}
+    \brAttr{estado}{Estado}{Enum}{Activo o Cerrado}{Sí}
+    \cdtEntityRelSection
+    \brRel{\brRelComposition}{PersonaFamiliar}{Un \hyperlink{CasoNNA}{Caso} contiene muchas \hyperlink{PersonaFamiliar}{Personas}}
+    \brRel{\brRelComposition}{RelacionFamiliar}{Un \hyperlink{CasoNNA}{Caso} contiene muchas \hyperlink{RelacionFamiliar}{Relaciones}}
+    \brRel{\brRelComposition}{Familiograma}{Un \hyperlink{CasoNNA}{Caso} tiene un \hyperlink{Familiograma}{Familiograma}}
+\end{cdtEntidad}
+
+\begin{cdtEntidad}{PersonaFamiliar}{Persona Familiar}
+    \brAttr{nombre}{Nombre}{Cadena}{Nombre de la persona}{Sí}
+    \brAttr{rol\_en\_familia}{Rol}{Cadena}{Ej. Padre, Madre, Abuelo}{No}
+    \brAttr{tipo\_simbolo}{Símbolo}{Enum}{Normal, NNA Clave, Agresor, Cuidador, Fallecido}{Sí}
+    \brAttr{vive\_con\_nna}{Vive con NNA}{Booleano}{Indica si cohabita con el NNA}{Sí}
+    \brAttr{es\_responsable\_legal}{Responsable}{Booleano}{Indica si tiene la tutela legal}{Sí}
+    \cdtEntityRelSection
+    \brRel{\brRelAgregation}{CasoNNA}{Pertenece a un \hyperlink{CasoNNA}{Caso NNA}}
+\end{cdtEntidad}
+
+\begin{cdtEntidad}{RelacionFamiliar}{Relación Familiar}
+    \brAttr{tipo\_relacion}{Tipo}{Enum}{Biológica, Legal, Conflictiva, Protectora, etc.}{Sí}
+    \brAttr{descripcion}{Descripción}{Cadena}{Notas adicionales sobre el vínculo}{No}
+    \brAttr{bidireccional}{Bidireccional}{Booleano}{Si el vínculo es mutuo}{Sí}
+    \cdtEntityRelSection
+    \brRel{\brRelParticipation}{PersonaFamiliar}{Une una \hyperlink{PersonaFamiliar}{Persona Origen} con una Persona Destino}
+    \brRel{\brRelAgregation}{CasoNNA}{Pertenece a un \hyperlink{CasoNNA}{Caso NNA}}
+\end{cdtEntidad}
+
+\begin{cdtEntidad}{Familiograma}{Familiograma}
+    \brAttr{grafo\_json}{Grafo JSON}{JSON}{Estructura visual de nodos y aristas para el editor ReactFlow}{Sí}
+    \brAttr{imagen\_url}{Imagen URL}{Cadena}{Snapshot de la última versión gráfica}{No}
+    \cdtEntityRelSection
+    \brRel{\brRelComposition}{HistorialFamiliograma}{Genera múltiples \hyperlink{HistorialFamiliograma}{Versiones en el Historial}}
+\end{cdtEntidad}
+
+\begin{cdtEntidad}{HistorialFamiliograma}{Historial Familiograma}
+    \brAttr{version}{Versión}{Entero}{Número de versión autoincremental}{Sí}
+    \brAttr{grafo\_json}{Grafo}{JSON}{Copia del estado del grafo en esta versión}{Sí}
+    \brAttr{notas\_version}{Notas}{Cadena}{Comentario de los cambios (ej. "Restaurado desde v2")}{No}
+    \cdtEntityRelSection
+    \brRel{\brRelAgregation}{Familiograma}{Pertenece a un \hyperlink{Familiograma}{Familiograma}}
+\end{cdtEntidad}
+
+\section{Reglas de Negocio}
+
+\begin{description}
+    \item[\textbf{RN-NNA-01 Unicidad de relaciones:}] Una relación familiar origen-destino debe asociar a dos personas diferentes (una persona no puede tener una relación consigo misma).
+    \item[\textbf{RN-NNA-02 Versionado automático:}] Cada vez que se actualiza el \hyperlink{tFamiliograma}{Familiograma} (el JSON del grafo cambia), el sistema debe guardar automáticamente una copia del estado anterior en el \hyperlink{tHistorialFamiliograma}{Historial} para permitir restauraciones.
+    \item[\textbf{RN-NNA-03 Dependencia de personas para relaciones:}] Para poder crear una \hyperlink{tRelacionFamiliar}{Relación Familiar} en el sistema, deben existir al menos dos \hyperlink{tPersonaFamiliar}{Personas} registradas en el mismo Caso.
+    \item[\textbf{RN-NNA-04 Acceso a casos:}] Un coordinador solo puede modificar los casos NNA de los que es creador o responsable asignado. El director tiene acceso global a todos los casos.
+\end{description}
+
+\end{document}

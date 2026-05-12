@@ -1,0 +1,8 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Introducción}{3}{section.1}%
+\contentsline {section}{\numberline {2}Actores del sistema}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Director}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Coordinador / Psicólogo}{3}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Términos del Negocio}{4}{section.3}%
+\contentsline {section}{\numberline {4}Modelo del dominio del problema}{4}{section.4}%
+\contentsline {section}{\numberline {5}Reglas de Negocio}{6}{section.5}%
