@@ -81,6 +81,20 @@
 \newcommand{\brRelGeneralization}{Generalización}
 \newcommand{\brRelParticipation}{Asociación}
 
+\newcommand{\CasoDeUso}[5]{
+    \vspace{1.5em}\noindent\textcolor{ipnGuinda}{\textbf{\Large CU-#1: #2}}\par\vspace{0.8em}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|>{\columncolor{tablaHeader}\bfseries}p{3.5cm}|p{11.5cm}|}
+    \hline
+    Actor Principal & #3 \\
+    \hline
+    Descripción & #4 \\
+    \hline
+    Flujo Principal & #5 \\
+    \hline
+    \end{tabular}\vspace{1.5em}
+}
+
 \begin{document}
 \thispagestyle{empty} % sin número de página en la portada
 
@@ -240,5 +254,131 @@ A continuación se describen las entidades principales que conforman el modelo d
     \item[\textbf{RN-NNA-03 Dependencia de personas para relaciones:}] Para poder crear una \hyperlink{tRelacionFamiliar}{Relación Familiar} en el sistema, deben existir al menos dos \hyperlink{tPersonaFamiliar}{Personas} registradas en el mismo Caso.
     \item[\textbf{RN-NNA-04 Acceso a casos:}] Un coordinador solo puede modificar los casos NNA de los que es creador o responsable asignado. El director tiene acceso global a todos los casos.
 \end{description}
+
+\section{Casos de Uso}
+
+A continuación, se describen los 10 casos de uso principales correspondientes a la gestión de NNA y el ciclo de vida del familiograma interactivo.
+
+\CasoDeUso{01}{Registrar Caso NNA}
+{Coordinador / Psicólogo}
+{Permite al actor registrar a un nuevo menor de edad en situación de vulnerabilidad abriendo un expediente.}
+{
+\begin{enumerate}
+    \item El actor selecciona "Nuevo Caso NNA" en el dashboard.
+    \item El sistema muestra el formulario de datos generales.
+    \item El actor ingresa nombre, CURP, edad, género y motivo de ingreso.
+    \item El sistema valida la información y crea el registro del caso en estado "Activo".
+\end{enumerate}
+}
+
+\CasoDeUso{02}{Consultar Casos NNA}
+{Director, Coordinador / Psicólogo}
+{Permite visualizar la lista de expedientes activos e inactivos, con herramientas de filtrado.}
+{
+\begin{enumerate}
+    \item El actor accede al Módulo de Protección NNA.
+    \item El sistema lista los casos NNA recientes.
+    \item El actor utiliza los filtros (estado, rango de edad, género) o la barra de búsqueda.
+    \item El sistema actualiza la lista mostrando coincidencias.
+\end{enumerate}
+}
+
+\CasoDeUso{03}{Registrar Persona Familiar}
+{Coordinador / Psicólogo}
+{Añade a un individuo (padre, madre, hermano, cuidador, agresor) al expediente de un NNA para después vincularlo al familiograma.}
+{
+\begin{enumerate}
+    \item El actor ingresa a un Caso NNA y va a la pestaña "Personas Familiares".
+    \item El actor hace clic en "Agregar Persona".
+    \item El actor completa los datos sociodemográficos y define el rol o símbolo clínico.
+    \item El sistema guarda a la persona y la hace disponible para el familiograma.
+\end{enumerate}
+}
+
+\CasoDeUso{04}{Registrar Relación Familiar}
+{Coordinador / Psicólogo}
+{Crea un vínculo clínico o descriptivo entre dos personas familiares registradas en un mismo caso.}
+{
+\begin{enumerate}
+    \item El actor accede a la pestaña "Relaciones Familiares" del caso.
+    \item El actor selecciona a la "Persona Origen" y a la "Persona Destino".
+    \item El actor escoge el tipo de relación (biológica, conflictiva, distante, etc.).
+    \item El sistema registra la relación bidireccional o unidireccional según aplique.
+\end{enumerate}
+}
+
+\CasoDeUso{05}{Modificar Grafo del Familiograma}
+{Coordinador / Psicólogo}
+{Permite utilizar el editor visual (React Flow) para acomodar los nodos y trazar las líneas de las relaciones familiares de forma gráfica.}
+{
+\begin{enumerate}
+    \item El actor ingresa al "Editor de Familiograma".
+    \item El sistema carga los nodos (personas) y aristas (relaciones) guardadas previamente.
+    \item El actor arrastra los nodos para acomodarlos o crea nuevas aristas visualmente.
+    \item El actor presiona "Guardar".
+    \item El sistema actualiza el grafo JSON y genera un \textbf{Snapshot en el Historial}.
+\end{enumerate}
+}
+
+\CasoDeUso{06}{Consultar Historial del Familiograma}
+{Coordinador / Psicólogo}
+{Visualizar los estados pasados (versiones) de un familiograma a lo largo del tiempo.}
+{
+\begin{enumerate}
+    \item El actor accede a "Historial del Familiograma".
+    \item El sistema despliega una línea de tiempo con las versiones guardadas.
+    \item El actor selecciona una versión antigua.
+    \item El sistema dibuja el grafo exacto correspondiente a esa versión temporal.
+\end{enumerate}
+}
+
+\CasoDeUso{07}{Restaurar Versión del Familiograma}
+{Coordinador / Psicólogo}
+{Revierte el estado actual del familiograma a un snapshot histórico (ej. por cambios erróneos).}
+{
+\begin{enumerate}
+    \item El actor visualiza una versión antigua en el "Historial del Familiograma".
+    \item El actor hace clic en "Restaurar esta Versión".
+    \item El sistema clona el JSON de esa versión antigua y lo establece como la versión actual (nueva versión $N+1$).
+    \item El sistema recarga el editor visual con la estructura restaurada.
+\end{enumerate}
+}
+
+\CasoDeUso{08}{Exportar Reporte del Caso NNA}
+{Director, Coordinador / Psicólogo}
+{Genera un documento consolidado (JSON/PDF) con los datos del menor, sus familiares, relaciones y el diagrama visual.}
+{
+\begin{enumerate}
+    \item El actor ingresa a "Resumen Integral" del caso.
+    \item El actor hace clic en el botón "Exportar / Imprimir".
+    \item El sistema consolida la información de las 4 tablas (Caso, Personas, Relaciones, Familiograma).
+    \item El sistema descarga el archivo en el dispositivo del usuario.
+\end{enumerate}
+}
+
+\CasoDeUso{09}{Registrar Entrevista Familiar (Wizard)}
+{Coordinador / Psicólogo}
+{Asiste al psicólogo para registrar las observaciones de una entrevista en una secuencia guiada paso a paso.}
+{
+\begin{enumerate}
+    \item El actor ingresa a "Nueva Entrevista" desde el hub del caso.
+    \item El sistema muestra un Wizard interactivo (Paso 1: Motivo, Paso 2: Observaciones, Paso 3: Familiograma dinámico).
+    \item El actor completa cada sección y avanza.
+    \item Al finalizar, el sistema guarda la sesión de entrevista y actualiza el expediente.
+\end{enumerate}
+}
+
+\CasoDeUso{10}{Cerrar Caso NNA}
+{Director}
+{Cambia el estado de un expediente a inactivo cuando el menor egresa o concluye su proceso legal.}
+{
+\begin{enumerate}
+    \item El actor (con rol Director) ingresa a un Caso NNA.
+    \item En la configuración del caso, selecciona "Cerrar Expediente".
+    \item El sistema solicita una confirmación y un motivo de cierre.
+    \item El actor confirma.
+    \item El sistema bloquea futuras modificaciones al familiograma y cambia el estado a "Cerrado".
+\end{enumerate}
+}
 
 \end{document}

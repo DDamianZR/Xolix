@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.15)  12 MAY 2026 11:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.15)  12 MAY 2026 12:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -345,26 +345,26 @@ Package babel Info: 'spanish' activates 'spanish' shorthands.
 )
 \openout1 = `4_AnalisisNegocio.article.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Info: Redefining \. on input line 84.
-LaTeX Info: Redefining \% on input line 84.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Info: Redefining \. on input line 98.
+LaTeX Info: Redefining \% on input line 98.
 
 (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -387,7 +387,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 84.
+Package hyperref Info: Link coloring OFF on input line 98.
 
 (4_AnalisisNegocio.article.out) (4_AnalisisNegocio.article.out)
 \@outlinefile=\write3
@@ -429,31 +429,31 @@ Package hyperref Info: Link coloring OFF on input line 84.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 <C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/IPN.png, id=
-31, 1235.61626pt x 1323.94624pt>
+35, 1235.61626pt x 1323.94624pt>
 File: C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/IPN.png
  Graphic file (type png)
 <use C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/IPN.png>
 
 Package pdftex.def Info: C:/Users/damia/OneDrive - Instituto Politecnico Nacion
-al/Imagenes/IPN.png  used on input line 89.
+al/Imagenes/IPN.png  used on input line 103.
 (pdftex.def)             Requested size: 85.35826pt x 91.4534pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 90.
+(Font)              <12> on input line 104.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 90.
+(Font)              <8> on input line 104.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 90.
+(Font)              <6> on input line 104.
 <C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/ESCOM.png, i
-d=32, 481.8pt x 367.3725pt>
+d=36, 481.8pt x 367.3725pt>
 File: C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/ESCOM.p
 ng Graphic file (type png)
 <use C:/Users/damia/OneDrive - Instituto Politecnico Nacional/Imagenes/ESCOM.pn
 g>
 Package pdftex.def Info: C:/Users/damia/OneDrive - Instituto Politecnico Nacion
-al/Imagenes/ESCOM.png  used on input line 94.
+al/Imagenes/ESCOM.png  used on input line 108.
 (pdftex.def)             Requested size: 85.35826pt x 65.08154pt.
 
-Overfull \hbox (11.36859pt too wide) in paragraph at lines 88--96
+Overfull \hbox (11.36859pt too wide) in paragraph at lines 102--110
 []$[]$  $[]$ 
  []
 
@@ -486,22 +486,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
 
 [3]
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 199--200
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 213--214
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 199--200
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
 
  []
 
 
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 209--210
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 223--224
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
 
  []
 
@@ -513,32 +513,32 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
 
 [4]
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 218--219
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 232--233
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 218--219
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
 
  []
 
 
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 225--226
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 239--240
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 225--226
+Underfull \hbox (badness 10000) in paragraph at lines 239--240
 
  []
 
 
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 233--234
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 247--248
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 233--234
+Underfull \hbox (badness 10000) in paragraph at lines 247--248
 
  []
 
@@ -550,8 +550,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
 
 [5]
-Overfull \hbox (7.514pt too wide) in paragraph at lines 238--239
+Overfull \hbox (7.514pt too wide) in paragraph at lines 252--253
 []\T1/cmr/m/n/12 Una re-la-ción fa-mi-liar origen-destino de-be aso-
+ []
+
+
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 272--273
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 272--273
+
  []
 
 
@@ -561,7 +571,132 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
 
-[6] (4_AnalisisNegocio.article.aux
+[6]
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 284--285
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 284--285
+
+ []
+
+
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 296--297
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--297
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.64995pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.64995pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
+
+[7]
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 308--309
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--309
+
+ []
+
+
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 321--322
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--322
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.64995pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.64995pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
+
+[8]
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 333--334
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 333--334
+
+ []
+
+
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 345--346
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 345--346
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.64995pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.64995pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
+
+[9]
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 357--358
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 357--358
+
+ []
+
+
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 369--370
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--370
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.64995pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.64995pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
+
+[10]
+Overfull \hbox (26.03764pt too wide) in paragraph at lines 382--383
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 24.64995pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.64995pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-12.64995pt}.
+
+[11] (4_AnalisisNegocio.article.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -571,33 +706,37 @@ L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `4_AnalisisNegocio.article.out' has not chang
 ed.
-(rerunfilecheck)             Checksum: 3B8666CF78385CD199503C4972C837A0;1024.
+(rerunfilecheck)             Checksum: 94878A543DE789F7D111D7E5DD3F5401;1133.
  ) 
 Here is how much of TeX's memory you used:
- 11993 strings out of 467691
- 187196 string characters out of 5425054
- 641336 words of memory out of 5000000
- 40894 multiletter control sequences out of 15000+600000
- 638084 words of font info for 59 fonts, out of 8000000 for 9000
+ 12055 strings out of 467691
+ 187734 string characters out of 5425054
+ 641535 words of memory out of 5000000
+ 40906 multiletter control sequences out of 15000+600000
+ 639614 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,83p,414b,555s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,83p,414b,555s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{tHistorialFamiliograma} has been referenced but doe
 s not exist, replaced by a fixed one
 
- <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti12
+ <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm06
 00.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\
-ecrm1095.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
-pi600\ecbx1200.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappe
-n/ec/dpi600\ecrm1440.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/j
-knappen/ec/dpi600\ecrm1200.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/lj
-four/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts
-/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk> <C:\Users\damia\AppData\Local\MiKTeX
-\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\damia\AppData\Local\
-MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk>
-Output written on 4_AnalisisNegocio.article.pdf (6 pages, 256128 bytes).
+ecrm0800.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
+pi600\ecti1200.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappe
+n/ec/dpi600\ecrm1095.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/ljfour/j
+knappen/ec/dpi600\ecbx1200.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts/pk/lj
+four/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\damia\AppData\Local\MiKTeX\fonts
+/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\damia\AppData\Local\MiKTeX
+\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\damia\AppData\Local\
+MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk> <C:\Users\damia\AppData\
+Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\damia\Ap
+pData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk><C:/Program F
+iles/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/
+fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on 4_AnalisisNegocio.article.pdf (11 pages, 302125 bytes).
 PDF statistics:
- 455 PDF objects out of 1000 (max. 8388607)
- 28 named destinations out of 1000 (max. 500000)
- 67 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 583 PDF objects out of 1000 (max. 8388607)
+ 76 named destinations out of 1000 (max. 500000)
+ 75 words of extra memory for PDF output out of 10000 (max. 10000000)
 
