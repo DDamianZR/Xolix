@@ -1,15 +1,16 @@
-# 🟣 XOLIX — Sistema de Gestión de Personal
+# 🟣 XOLIX — Sistema de Gestión para Fundación
 
-Sistema web completo para la gestión del personal de una fundación. Incluye gestión de usuarios, expedientes (documentos PDF) con compartición, y un sistema de procesos tipo Task Manager.
+Sistema web completo para una fundación que atiende Niñas, Niños y Adolescentes (NNA) que han sufrido vulneración de derechos. Incluye módulos de gestión de usuarios, expedientes (documentos PDF), procesos tipo Task Manager, gestión de casos, y el **Módulo de Protección NNA** con Familiograma interactivo.
 
 ## 🛠 Tecnologías
 
 | Componente        | Tecnología                                       |
 | ----------------- | ------------------------------------------------ |
 | **Backend**       | FastAPI + SQLAlchemy + Pydantic v2               |
-| **Frontend**      | React + Vite + React Router                      |
+| **Frontend**      | React 18 + Vite + React Router v6                |
 | **Base de datos** | PostgreSQL 14+                                   |
 | **Autenticación** | JWT (python-jose) + bcrypt                       |
+| **Grafos**        | @xyflow/react (Familiograma interactivo)         |
 | **Validaciones**  | RFC, CURP, Email (con validación cruzada)        |
 | **API Postal**    | zippopotam.us (autocompletado por código postal) |
 
@@ -25,36 +26,48 @@ xolix.3.0/
 │   ├── database.py               # SQLAlchemy engine
 │   ├── security.py               # JWT + bcrypt
 │   ├── dependencies.py           # get_db, get_current_user, require_role
-│   ├── models/                   # Modelos SQLAlchemy
+│   ├── models/
 │   │   ├── user.py
 │   │   ├── expediente.py
-│   │   └── proceso.py
-│   ├── schemas/                  # Schemas Pydantic
-│   │   ├── user.py
-│   │   ├── expediente.py
-│   │   └── proceso.py
-│   ├── routers/                  # Endpoints API
-│   │   ├── auth.py               # POST /api/auth/login
-│   │   ├── users.py              # CRUD /api/usuarios/
-│   │   ├── expedientes.py        # Archivos + compartición
-│   │   ├── procesos.py           # Task manager
-│   │   └── sepomex.py            # Autocompletado CP
-│   ├── services/                 # Lógica de negocio
-│   │   ├── user_service.py
-│   │   ├── expediente_service.py
-│   │   └── proceso_service.py
-│   └── validators/               # Validaciones mexicanas
-│       └── mexican_ids.py        # RFC, CURP
-├── frontend/                     # React + Vite
-│   ├── src/
-│   │   ├── pages/                # Login, Dashboard, Register, etc.
-│   │   ├── components/           # Topbar, Modal, ProtectedRoute
-│   │   ├── context/              # AuthContext
-│   │   └── api/                  # Cliente API centralizado
-│   └── vite.config.js
-├── tests/                        # Pytest
-│   └── test_api.py
-├── .env                          # Variables de entorno
+│   │   ├── proceso.py
+│   │   ├── caso.py
+│   │   └── nna.py                    # CasoNNA, PersonaFamiliar, Familiograma,
+│   │                                 #   HistorialFamiliograma, RelacionFamiliar
+│   ├── schemas/
+│   │   ├── user.py, expediente.py, proceso.py, caso.py
+│   │   └── nna.py
+│   ├── routers/
+│   │   ├── auth.py, users.py, expedientes.py, procesos.py, casos.py
+│   │   └── nna.py                    # /api/nna/... (15+ endpoints)
+│   ├── services/
+│   │   ├── user_service.py, expediente_service.py, proceso_service.py
+│   │   ├── caso_service.py
+│   │   └── nna_service.py
+│   └── validators/
+│       └── mexican_ids.py
+├── frontend/
+│   └── src/
+│       ├── pages/nna/
+│       │   ├── NnaDashboard.jsx, NuevoCasoNNA.jsx
+│       │   ├── CasoNNADetalle.jsx      # Hub de módulos
+│       │   ├── EntrevistaWizard.jsx
+│       │   ├── FamiliogramaEditor.jsx  # Canvas ReactFlow interactivo
+│       │   ├── ObservacionesPage.jsx, PlanAccionPage.jsx
+│       │   ├── PersonasFamiliaresPage.jsx   ★ Iteración 2
+│       │   ├── RelacionesFamiliaresPage.jsx ★ Iteración 2
+│       │   ├── HistorialFamiliogramaPage.jsx ★ Iteración 2
+│       │   ├── FamiliogramaReportPage.jsx    ★ Iteración 2
+│       │   └── ResumenCasoNNAPage.jsx         ★ Iteración 2
+│       ├── components/, context/
+│       └── api/client.js             # Cliente API centralizado (JWT auto)
+├── migrations/
+│   ├── init_db.sql, create_nna.sql
+│   ├── create_familiograma_extended.sql  ★ Nuevas tablas iteración 2
+│   └── seed_familiograma.sql             ★ Datos de prueba
+├── tests/
+├── retrospectiva.md                  ★ Retrospectiva del sprint
+├── coevaluacion.md                   ★ Evaluación del equipo
+├── .env
 └── requirements.txt
 ```
 
@@ -233,3 +246,20 @@ venv\Scripts\python.exe -m uvicorn app.main:app --reload
 cd frontend
 npm run dev
 ```
+
+
+---
+
+## Migraciones Iteracion 2
+
+Ejecutar despues de init_db.sql y create_nna.sql:
+
+    psql -U postgres -d proyecto_escom -f migrations/create_familiograma_extended.sql
+    psql -U postgres -d proyecto_escom -f migrations/seed_familiograma.sql
+
+Nuevas rutas frontend:
+  /nna/casos/:id/personas            Pantalla 1 - Personas Familiares
+  /nna/casos/:id/relaciones          Pantalla 2 - Relaciones
+  /nna/casos/:id/historial-familiograma  Pantalla 3 - Historial
+  /nna/casos/:id/reporte             Pantalla 4 - Reporte/Exportar
+  /nna/casos/:id/resumen             Pantalla 5 - Resumen Integral

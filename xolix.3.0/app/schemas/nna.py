@@ -71,6 +71,14 @@ class PersonaFamiliarCreate(BaseModel):
     rol_en_familia: Optional[str] = None
     tipo_simbolo: Optional[str] = "normal"
     observaciones: Optional[str] = None
+    # Campos extendidos
+    telefono: Optional[str] = None
+    direccion: Optional[str] = None
+    ocupacion: Optional[str] = None
+    escolaridad: Optional[str] = None
+    estado_salud: Optional[str] = None
+    vive_con_nna: Optional[bool] = False
+    es_responsable_legal: Optional[bool] = False
 
 class PersonaFamiliarUpdate(BaseModel):
     nombre: Optional[str] = None
@@ -79,6 +87,13 @@ class PersonaFamiliarUpdate(BaseModel):
     rol_en_familia: Optional[str] = None
     tipo_simbolo: Optional[str] = None
     observaciones: Optional[str] = None
+    telefono: Optional[str] = None
+    direccion: Optional[str] = None
+    ocupacion: Optional[str] = None
+    escolaridad: Optional[str] = None
+    estado_salud: Optional[str] = None
+    vive_con_nna: Optional[bool] = None
+    es_responsable_legal: Optional[bool] = None
 
 class PersonaFamiliarResponse(BaseModel):
     id: int
@@ -89,6 +104,13 @@ class PersonaFamiliarResponse(BaseModel):
     rol_en_familia: Optional[str] = None
     tipo_simbolo: str
     observaciones: Optional[str] = None
+    telefono: Optional[str] = None
+    direccion: Optional[str] = None
+    ocupacion: Optional[str] = None
+    escolaridad: Optional[str] = None
+    estado_salud: Optional[str] = None
+    vive_con_nna: bool = False
+    es_responsable_legal: bool = False
     fecha_creacion: Optional[datetime] = None
 
     model_config = {"from_attributes": True}
@@ -97,6 +119,7 @@ class PersonaFamiliarResponse(BaseModel):
 class FamiliogramaUpsert(BaseModel):
     grafo_json: Optional[Dict[str, Any]] = None
     imagen_url: Optional[str] = None
+    notas_version: Optional[str] = None  # Nota descriptiva del cambio
 
 class FamiliogramaResponse(BaseModel):
     id: int
@@ -104,6 +127,47 @@ class FamiliogramaResponse(BaseModel):
     grafo_json: Optional[Dict[str, Any]] = None
     imagen_url: Optional[str] = None
     fecha_actualizacion: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
+# --- HistorialFamiliograma ---
+class HistorialFamiliogramaResponse(BaseModel):
+    id: int
+    familiograma_id: int
+    caso_id: int
+    version: int
+    grafo_json: Optional[Dict[str, Any]] = None
+    modificado_por_id: Optional[int] = None
+    modificado_por_nombre: Optional[str] = None
+    notas_version: Optional[str] = None
+    fecha: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
+# --- RelacionFamiliar ---
+class RelacionFamiliarCreate(BaseModel):
+    persona_origen_id: int
+    persona_destino_id: int
+    tipo_relacion: str = "biologica"
+    descripcion: Optional[str] = None
+    bidireccional: Optional[bool] = True
+
+class RelacionFamiliarUpdate(BaseModel):
+    tipo_relacion: Optional[str] = None
+    descripcion: Optional[str] = None
+    bidireccional: Optional[bool] = None
+
+class RelacionFamiliarResponse(BaseModel):
+    id: int
+    caso_id: int
+    persona_origen_id: int
+    persona_destino_id: int
+    persona_origen_nombre: Optional[str] = None
+    persona_destino_nombre: Optional[str] = None
+    tipo_relacion: str
+    descripcion: Optional[str] = None
+    bidireccional: bool
+    fecha_creacion: Optional[datetime] = None
 
     model_config = {"from_attributes": True}
 

@@ -12,7 +12,7 @@ from app.models.user import User  # noqa: F401
 from app.models.expediente import Expediente, ExpedienteCompartido  # noqa: F401
 from app.models.proceso import Proceso, Subtarea  # noqa: F401
 from app.models.caso import Caso, HechoVictimal, CasoParticipante, NotaCaso, DocumentoCaso  # noqa: F401
-from app.models.nna import CasoNNA, EntrevistaFamilia, PersonaFamiliar, Familiograma, ObservacionNoVerbal # noqa: F401
+from app.models.nna import CasoNNA, EntrevistaFamilia, PersonaFamiliar, Familiograma, ObservacionNoVerbal, HistorialFamiliograma, RelacionFamiliar # noqa: F401
 
 from app.routers import auth, users, sepomex, expedientes, procesos, casos, nna
 

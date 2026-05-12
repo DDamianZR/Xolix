@@ -228,6 +228,24 @@ const api = {
   getNnaPlanAccion: (casoId) => request(`/nna/casos/${casoId}/plan-accion`),
   generateNnaPlanAccion: (casoId) =>
     request(`/nna/casos/${casoId}/plan-accion`, { method: 'POST' }),
+
+  // Relaciones familiares
+  getNnaRelaciones: (casoId) => request(`/nna/casos/${casoId}/relaciones`),
+  createNnaRelacion: (casoId, data) =>
+    request(`/nna/casos/${casoId}/relaciones`, { method: 'POST', body: JSON.stringify(data) }),
+  updateNnaRelacion: (casoId, relacionId, data) =>
+    request(`/nna/casos/${casoId}/relaciones/${relacionId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteNnaRelacion: (casoId, relacionId) =>
+    request(`/nna/casos/${casoId}/relaciones/${relacionId}`, { method: 'DELETE' }),
+
+  // Familiograma — historial y exportación
+  getNnaFamiliogramaHistorial: (casoId) => request(`/nna/casos/${casoId}/familiograma/historial`),
+  restaurarVersionFamiliograma: (casoId, historialId) =>
+    request(`/nna/casos/${casoId}/familiograma/historial/${historialId}/restaurar`, { method: 'POST' }),
+  exportarFamiliograma: (casoId) => request(`/nna/casos/${casoId}/familiograma/exportar`),
+
+  // Persona individual
+  getNnaPersona: (casoId, personaId) => request(`/nna/casos/${casoId}/personas/${personaId}`),
 };
 
 export default api;
