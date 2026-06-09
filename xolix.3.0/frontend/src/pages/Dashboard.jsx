@@ -78,6 +78,18 @@ export default function Dashboard() {
             <span className="quick-nav-icon">🛡️</span>
             <span className="quick-nav-text">Protección NNA</span>
           </div>
+          <div className="quick-nav-card" onClick={() => navigate('/actores')}>
+            <span className="quick-nav-icon">🤝</span>
+            <span className="quick-nav-text">Actores</span>
+          </div>
+          <div className="quick-nav-card" onClick={() => navigate('/reportes')}>
+            <span className="quick-nav-icon">📊</span>
+            <span className="quick-nav-text">Reportes</span>
+          </div>
+          <div className="quick-nav-card" onClick={() => navigate('/colaboradores')}>
+            <span className="quick-nav-icon">👤</span>
+            <span className="quick-nav-text">Colaboradores</span>
+          </div>
         </div>
 
         <div className="table-card">

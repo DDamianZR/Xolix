@@ -4,6 +4,7 @@ import Topbar from '../../components/Topbar';
 import api from '../../api/client';
 
 const NAV_ITEMS = [
+  { key: 'equipo',                 icon: '👥', label: 'Equipo',           desc: 'Equipo multidisciplinario del caso' },
   { key: 'resumen',                icon: '📊', label: 'Resumen',          desc: 'Vista consolidada del caso' },
   { key: 'entrevista',             icon: '📝', label: 'Entrevista',        desc: 'Wizard de entrevista familiar' },
   { key: 'personas',               icon: '👨‍👩‍👧', label: 'Personas',         desc: 'Gestión de miembros familiares' },
@@ -11,6 +12,8 @@ const NAV_ITEMS = [
   { key: 'familiograma',           icon: '🗺️', label: 'Familiograma',      desc: 'Editor interactivo del grafo' },
   { key: 'historial-familiograma', icon: '🕘', label: 'Historial',         desc: 'Versiones del familiograma' },
   { key: 'observaciones',          icon: '👁️', label: 'Observaciones',     desc: 'Conducta no verbal' },
+  { key: 'diagnostico',            icon: '🔍', label: 'Diagnóstico',       desc: 'Evaluación de derechos vulnerados' },
+  { key: 'planes',                 icon: '🎯', label: 'Planes de Restitución', desc: 'Medidas y seguimiento' },
   { key: 'plan',                   icon: '📋', label: 'Plan de Acción',    desc: 'Seguimiento y tareas' },
   { key: 'reporte',                icon: '📄', label: 'Reporte',           desc: 'Exportar datos completos' },
 ];

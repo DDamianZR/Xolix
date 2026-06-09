@@ -246,6 +246,13 @@ const api = {
 
   // Persona individual
   getNnaPersona: (casoId, personaId) => request(`/nna/casos/${casoId}/personas/${personaId}`),
+
+  // Métodos genéricos para rutas no mapeadas explícitamente
+  get: (path) => request(path.replace(/^\/api/, '')),
+  post: (path, data) => request(path.replace(/^\/api/, ''), { method: 'POST', body: JSON.stringify(data) }),
+  put: (path, data) => request(path.replace(/^\/api/, ''), { method: 'PUT', body: JSON.stringify(data) }),
+  patch: (path, data) => request(path.replace(/^\/api/, ''), { method: 'PATCH', body: JSON.stringify(data) }),
+  delete: (path) => request(path.replace(/^\/api/, ''), { method: 'DELETE' }),
 };
 
 export default api;
