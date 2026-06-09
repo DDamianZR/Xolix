@@ -12,9 +12,14 @@ from app.models.user import User  # noqa: F401
 from app.models.expediente import Expediente, ExpedienteCompartido  # noqa: F401
 from app.models.proceso import Proceso, Subtarea  # noqa: F401
 from app.models.caso import Caso, HechoVictimal, CasoParticipante, NotaCaso, DocumentoCaso  # noqa: F401
-from app.models.nna import CasoNNA, EntrevistaFamilia, PersonaFamiliar, Familiograma, ObservacionNoVerbal, HistorialFamiliograma, RelacionFamiliar # noqa: F401
+from app.models.nna import CasoNNA, EntrevistaFamilia, PersonaFamiliar, Familiograma, ObservacionNoVerbal, HistorialFamiliograma, RelacionFamiliar, TutorNNA, DatosMedicosNNA # noqa: F401
+from app.models.catalogo import Derecho, Indicador  # noqa: F401
+from app.models.actor import Actor, ResponsableActor, HorarioActor, ServicioActor, RequisitoServicio  # noqa: F401
+from app.models.diagnostico import Diagnostico, EvidenciaDiagnostico, IndicadorDiagnostico, DerechoVulnerado  # noqa: F401
+from app.models.plan import PlanRestitucion, MedidaRestitucion, SeguimientoMedida  # noqa: F401
+from app.models.equipo import EquipoCaso, EvaluacionConfianza  # noqa: F401
 
-from app.routers import auth, users, sepomex, expedientes, procesos, casos, nna
+from app.routers import auth, users, sepomex, expedientes, procesos, casos, nna, catalogo, actores, diagnosticos, planes, reportes, equipo, colaboradores
 
 settings = get_settings()
 
@@ -49,6 +54,13 @@ app.include_router(expedientes.router)
 app.include_router(procesos.router)
 app.include_router(casos.router)
 app.include_router(nna.router)
+app.include_router(catalogo.router)
+app.include_router(actores.router)
+app.include_router(diagnosticos.router)
+app.include_router(planes.router)
+app.include_router(reportes.router)
+app.include_router(equipo.router)
+app.include_router(colaboradores.router)
 
 
 @app.get("/api/health")

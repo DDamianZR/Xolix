@@ -1,12 +1,14 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from fastapi import HTTPException
 from datetime import datetime
 
 from app.models.nna import (
     CasoNNA, EntrevistaFamilia, PersonaFamiliar, Familiograma, ObservacionNoVerbal,
-    HistorialFamiliograma, RelacionFamiliar,
+    HistorialFamiliograma, RelacionFamiliar, TutorNNA, DatosMedicosNNA,
     EstadoCasoNNA, GeneroNNA, TipoSimboloFamiliar, TipoRelacionFamiliar
 )
+from app.models.equipo import EquipoCaso
 from app.models.user import User
 from app.services import proceso_service
 
@@ -17,8 +19,13 @@ def crear_caso_nna(db: Session, data: dict, creador_id: int) -> CasoNNA:
         nna_nombre=data.get("nna_nombre"),
         nna_edad=data.get("nna_edad"),
         nna_genero=GeneroNNA(data.get("nna_genero")) if data.get("nna_genero") else None,
-        creador_id=creador_id
+        nna_nacionalidad=data.get("nna_nacionalidad"),
+        creador_id=creador_id,
     )
+    # Si el creador es trabajador_social, auto-asignarse como responsable
+    creador = db.query(User).filter(User.id == creador_id).first()
+    if creador and creador.rol == "trabajador_social":
+        caso.responsable_id = creador_id
     db.add(caso)
     db.commit()
     db.refresh(caso)
@@ -26,8 +33,18 @@ def crear_caso_nna(db: Session, data: dict, creador_id: int) -> CasoNNA:
 
 def listar_casos_nna(db: Session, user_id: int, rol: str) -> list[CasoNNA]:
     query = db.query(CasoNNA)
-    if rol not in ["director", "coordinador"]:
-        query = query.filter(CasoNNA.creador_id == user_id)
+    if rol in ("director", "coordinador"):
+        return query.order_by(CasoNNA.fecha_creacion.desc()).all()
+    # Otros roles ven casos donde son responsable O miembro activo del equipo
+    subq = db.query(EquipoCaso.caso_id).filter(
+        EquipoCaso.usuario_id == user_id,
+        EquipoCaso.activo == True,
+    ).subquery()
+    query = query.filter(or_(
+        CasoNNA.responsable_id == user_id,
+        CasoNNA.creador_id == user_id,
+        CasoNNA.id.in_(subq),
+    ))
     return query.order_by(CasoNNA.fecha_creacion.desc()).all()
 
 def obtener_caso_nna(db: Session, caso_id: int, user_id: int, rol: str) -> CasoNNA:
@@ -42,10 +59,20 @@ def actualizar_caso_nna(db: Session, caso_id: int, data: dict) -> CasoNNA:
     caso = db.query(CasoNNA).filter(CasoNNA.id == caso_id).first()
     if not caso:
         raise HTTPException(status_code=404, detail="Caso NNA no encontrado")
-    if "nna_nombre" in data and data["nna_nombre"] is not None:
-        caso.nna_nombre = data["nna_nombre"]
-    if "nna_edad" in data:
-        caso.nna_edad = data["nna_edad"]
+    simple_fields = ["nna_nombre", "nna_curp", "nna_edad", "nna_nacionalidad", "nna_estado_civil"]
+    for f in simple_fields:
+        if f in data and data[f] is not None:
+            setattr(caso, f, data[f])
+    if "nna_fecha_nacimiento" in data and data["nna_fecha_nacimiento"]:
+        from datetime import date
+        val = data["nna_fecha_nacimiento"]
+        if isinstance(val, str):
+            from datetime import datetime
+            try:
+                val = datetime.strptime(val, "%Y-%m-%d").date()
+            except ValueError:
+                val = None
+        caso.nna_fecha_nacimiento = val
     if "nna_genero" in data and data["nna_genero"]:
         caso.nna_genero = GeneroNNA(data["nna_genero"])
     if "estado" in data and data["estado"]:
@@ -478,3 +505,45 @@ def obtener_plan_accion(db: Session, caso_id: int) -> dict | None:
     if not entrevista or not entrevista.proceso_id:
         return None
     return proceso_service.obtener_proceso(db, entrevista.proceso_id)
+
+# ── Tutor ────────────────────────────────────
+
+def upsert_tutor(db: Session, caso_id: int, data: dict) -> TutorNNA:
+    tutor = db.query(TutorNNA).filter(TutorNNA.caso_id == caso_id).first()
+    if tutor:
+        for k, v in data.items():
+            setattr(tutor, k, v)
+    else:
+        tutor = TutorNNA(caso_id=caso_id, **data)
+        db.add(tutor)
+    db.commit()
+    db.refresh(tutor)
+    return tutor
+
+def obtener_tutor(db: Session, caso_id: int) -> TutorNNA:
+    from fastapi import HTTPException
+    tutor = db.query(TutorNNA).filter(TutorNNA.caso_id == caso_id).first()
+    if not tutor:
+        raise HTTPException(status_code=404, detail="Tutor no registrado para este caso")
+    return tutor
+
+# ── Datos Médicos ────────────────────────────
+
+def upsert_datos_medicos(db: Session, caso_id: int, data: dict) -> DatosMedicosNNA:
+    dm = db.query(DatosMedicosNNA).filter(DatosMedicosNNA.caso_id == caso_id).first()
+    if dm:
+        for k, v in data.items():
+            setattr(dm, k, v)
+    else:
+        dm = DatosMedicosNNA(caso_id=caso_id, **data)
+        db.add(dm)
+    db.commit()
+    db.refresh(dm)
+    return dm
+
+def obtener_datos_medicos(db: Session, caso_id: int) -> DatosMedicosNNA:
+    from fastapi import HTTPException
+    dm = db.query(DatosMedicosNNA).filter(DatosMedicosNNA.caso_id == caso_id).first()
+    if not dm:
+        raise HTTPException(status_code=404, detail="Datos médicos no registrados para este caso")
+    return dm

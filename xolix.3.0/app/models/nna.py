@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Boolean, TIMESTAMP, ForeignKey, Enum as SAEnum, JSON
+from sqlalchemy import Column, Integer, String, Text, Boolean, TIMESTAMP, Date, ForeignKey, Enum as SAEnum, JSON
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.database import Base
@@ -36,19 +36,28 @@ class CasoNNA(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nna_nombre = Column(String(200), nullable=False)
+    nna_curp = Column(String(18), nullable=True)
+    nna_fecha_nacimiento = Column(Date, nullable=True)
     nna_edad = Column(Integer, nullable=True)
     nna_genero = Column(SAEnum(GeneroNNA), nullable=True)
+    nna_nacionalidad = Column(String(100), nullable=True, default="Mexicana")
+    nna_estado_civil = Column(String(50), nullable=True)
     estado = Column(SAEnum(EstadoCasoNNA), default=EstadoCasoNNA.activo, nullable=False)
     creador_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    responsable_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     fecha_creacion = Column(TIMESTAMP, server_default=func.now())
     fecha_actualizacion = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
 
-    creador = relationship("User", foreign_keys=[creador_id])
+    creador      = relationship("User", foreign_keys=[creador_id])
+    responsable  = relationship("User", foreign_keys=[responsable_id])
+    equipo       = relationship("EquipoCaso", back_populates="caso", cascade="all, delete-orphan")
     entrevista = relationship("EntrevistaFamilia", back_populates="caso", uselist=False, cascade="all, delete-orphan")
     personas = relationship("PersonaFamiliar", back_populates="caso", cascade="all, delete-orphan")
     familiograma = relationship("Familiograma", back_populates="caso", uselist=False, cascade="all, delete-orphan")
     observaciones = relationship("ObservacionNoVerbal", back_populates="caso", cascade="all, delete-orphan")
     relaciones = relationship("RelacionFamiliar", back_populates="caso", cascade="all, delete-orphan")
+    tutor = relationship("TutorNNA", back_populates="caso", uselist=False, cascade="all, delete-orphan")
+    datos_medicos = relationship("DatosMedicosNNA", back_populates="caso", uselist=False, cascade="all, delete-orphan")
 
 
 class EntrevistaFamilia(Base):
@@ -169,3 +178,45 @@ class ObservacionNoVerbal(Base):
     caso = relationship("CasoNNA", back_populates="observaciones")
     persona = relationship("PersonaFamiliar", back_populates="observaciones_no_verbales")
     registrada_por = relationship("User")
+
+
+class TutorNNA(Base):
+    __tablename__ = "nna_tutores"
+
+    id = Column(Integer, primary_key=True, index=True)
+    caso_id = Column(Integer, ForeignKey("nna_casos.id", ondelete="CASCADE"), unique=True, nullable=False)
+    nombre = Column(String(200), nullable=False)
+    apellido_paterno = Column(String(100), nullable=True)
+    apellido_materno = Column(String(100), nullable=True)
+    curp = Column(String(18), nullable=True)
+    rfc = Column(String(13), nullable=True)
+    parentesco = Column(String(100), nullable=True)
+    telefono = Column(String(20), nullable=True)
+    correo = Column(String(100), nullable=True)
+    direccion = Column(String(300), nullable=True)
+    ocupacion = Column(String(150), nullable=True)
+    documento_identificacion = Column(String(200), nullable=True)
+    numero_documento = Column(String(100), nullable=True)
+    fecha_creacion = Column(TIMESTAMP, server_default=func.now())
+    fecha_actualizacion = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+
+    caso = relationship("CasoNNA", back_populates="tutor")
+
+
+class DatosMedicosNNA(Base):
+    __tablename__ = "nna_datos_medicos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    caso_id = Column(Integer, ForeignKey("nna_casos.id", ondelete="CASCADE"), unique=True, nullable=False)
+    historial_medico = Column(Text, nullable=True)
+    alergias = Column(Text, nullable=True)
+    discapacidades = Column(Text, nullable=True)
+    cartilla_vacunacion = Column(JSON, nullable=True)  # [{vacuna, fecha, dosis}]
+    tipo_sangre = Column(String(10), nullable=True)
+    medico_responsable = Column(String(200), nullable=True)
+    institucion_medica = Column(String(200), nullable=True)
+    fecha_ultimo_chequeo = Column(Date, nullable=True)
+    fecha_creacion = Column(TIMESTAMP, server_default=func.now())
+    fecha_actualizacion = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+
+    caso = relationship("CasoNNA", back_populates="datos_medicos")

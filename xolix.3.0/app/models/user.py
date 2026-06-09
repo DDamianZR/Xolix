@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, Text, TIMESTAMP, Date
 from sqlalchemy.sql import func
 from datetime import date as date_type
 from app.database import Base
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -31,6 +32,10 @@ class User(Base):
     verificado = Column(Boolean, default=False)
     foto_perfil = Column(String(500), nullable=True, default=None)
     fecha_creacion = Column(TIMESTAMP, server_default=func.now())
+    tipo_colaboracion = Column(String(20), default="planta")
+    nivel_confianza = Column(Integer, default=3)
+    fecha_ultima_evaluacion = Column(Date, nullable=True)
+    fecha_ingreso = Column(Date, nullable=True)
 
     @property
     def edad_actual(self) -> int:

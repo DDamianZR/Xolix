@@ -36,3 +36,6 @@ Thumbs.db
 
 # Legacy backup
 _legacy/
+
+# Tooling interno (no forma parte del proyecto)
+.claude/

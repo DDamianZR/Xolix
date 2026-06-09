@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
-from datetime import datetime
+from datetime import datetime, date
 
 # --- Pydantic sub-schemas for JSON fields ---
 class FraseComunicada(BaseModel):
@@ -18,25 +18,82 @@ class DiaComunData(BaseModel):
     adulto_dificultad: Optional[str] = None     # "si"|"no"|"indeterminado"
     personas_mencionadas: List[str] = []
 
+# --- Tutor ---
+class TutorCreate(BaseModel):
+    nombre: str
+    apellido_paterno: Optional[str] = None
+    apellido_materno: Optional[str] = None
+    curp: Optional[str] = None
+    rfc: Optional[str] = None
+    parentesco: Optional[str] = None
+    telefono: Optional[str] = None
+    correo: Optional[str] = None
+    direccion: Optional[str] = None
+    ocupacion: Optional[str] = None
+    documento_identificacion: Optional[str] = None
+    numero_documento: Optional[str] = None
+
+class TutorResponse(TutorCreate):
+    id: int
+    caso_id: int
+    fecha_creacion: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
+# --- DatosMedicos ---
+class VacunaItem(BaseModel):
+    vacuna: str
+    fecha: Optional[str] = None
+    dosis: Optional[str] = None
+
+class DatosMedicosCreate(BaseModel):
+    historial_medico: Optional[str] = None
+    alergias: Optional[str] = None
+    discapacidades: Optional[str] = None
+    cartilla_vacunacion: Optional[List[VacunaItem]] = None
+    tipo_sangre: Optional[str] = None
+    medico_responsable: Optional[str] = None
+    institucion_medica: Optional[str] = None
+
+class DatosMedicosResponse(DatosMedicosCreate):
+    id: int
+    caso_id: int
+    fecha_creacion: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
 # --- CasoNNA ---
 class CasoNNACreate(BaseModel):
     nna_nombre: str
+    nna_curp: Optional[str] = None
+    nna_fecha_nacimiento: Optional[str] = None
     nna_edad: Optional[int] = None
     nna_genero: Optional[str] = None
+    nna_nacionalidad: Optional[str] = "Mexicana"
+    nna_estado_civil: Optional[str] = None
 
 class CasoNNAUpdate(BaseModel):
     nna_nombre: Optional[str] = None
+    nna_curp: Optional[str] = None
+    nna_fecha_nacimiento: Optional[str] = None
     nna_edad: Optional[int] = None
     nna_genero: Optional[str] = None
+    nna_nacionalidad: Optional[str] = None
+    nna_estado_civil: Optional[str] = None
     estado: Optional[str] = None
 
 class CasoNNAResponse(BaseModel):
     id: int
     nna_nombre: str
+    nna_curp: Optional[str] = None
+    nna_fecha_nacimiento: Optional[Any] = None
     nna_edad: Optional[int] = None
     nna_genero: Optional[str] = None
+    nna_nacionalidad: Optional[str] = None
+    nna_estado_civil: Optional[str] = None
     estado: str
     creador_id: int
+    responsable_id: Optional[int] = None
     fecha_creacion: Optional[datetime] = None
     fecha_actualizacion: Optional[datetime] = None
 

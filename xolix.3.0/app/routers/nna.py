@@ -11,6 +11,8 @@ from app.schemas.nna import (
     ObservacionCreate, ObservacionResponse,
     RelacionFamiliarCreate, RelacionFamiliarUpdate, RelacionFamiliarResponse,
     HistorialFamiliogramaResponse,
+    TutorCreate, TutorResponse,
+    DatosMedicosCreate, DatosMedicosResponse,
 )
 from app.services import nna_service
 
@@ -209,3 +211,31 @@ def obtener_plan(caso_id: int, db: Session = Depends(get_db),
     if not plan:
         return None
     return plan
+
+# ── Tutor ────────────────────────────────────
+
+@router.post("/casos/{caso_id}/tutor", response_model=TutorResponse)
+def guardar_tutor(caso_id: int, data: TutorCreate, db: Session = Depends(get_db),
+                  current_user: dict = Depends(get_current_user)):
+    nna_service.obtener_caso_nna(db, caso_id, current_user.get("user_id"), current_user.get("rol", ""))
+    return nna_service.upsert_tutor(db, caso_id, data.model_dump())
+
+@router.get("/casos/{caso_id}/tutor", response_model=TutorResponse)
+def obtener_tutor(caso_id: int, db: Session = Depends(get_db),
+                  current_user: dict = Depends(get_current_user)):
+    nna_service.obtener_caso_nna(db, caso_id, current_user.get("user_id"), current_user.get("rol", ""))
+    return nna_service.obtener_tutor(db, caso_id)
+
+# ── Datos Médicos ────────────────────────────
+
+@router.post("/casos/{caso_id}/datos-medicos", response_model=DatosMedicosResponse)
+def guardar_datos_medicos(caso_id: int, data: DatosMedicosCreate, db: Session = Depends(get_db),
+                          current_user: dict = Depends(get_current_user)):
+    nna_service.obtener_caso_nna(db, caso_id, current_user.get("user_id"), current_user.get("rol", ""))
+    return nna_service.upsert_datos_medicos(db, caso_id, data.model_dump())
+
+@router.get("/casos/{caso_id}/datos-medicos", response_model=DatosMedicosResponse)
+def obtener_datos_medicos(caso_id: int, db: Session = Depends(get_db),
+                          current_user: dict = Depends(get_current_user)):
+    nna_service.obtener_caso_nna(db, caso_id, current_user.get("user_id"), current_user.get("rol", ""))
+    return nna_service.obtener_datos_medicos(db, caso_id)
