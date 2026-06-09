@@ -250,16 +250,61 @@ npm run dev
 
 ---
 
-## Migraciones Iteracion 2
+## Migraciones Iteración 2 (Familiograma)
 
-Ejecutar despues de init_db.sql y create_nna.sql:
+Ejecutar después de init_db.sql y create_nna.sql:
 
     psql -U postgres -d proyecto_escom -f migrations/create_familiograma_extended.sql
     psql -U postgres -d proyecto_escom -f migrations/seed_familiograma.sql
 
-Nuevas rutas frontend:
-  /nna/casos/:id/personas            Pantalla 1 - Personas Familiares
-  /nna/casos/:id/relaciones          Pantalla 2 - Relaciones
-  /nna/casos/:id/historial-familiograma  Pantalla 3 - Historial
-  /nna/casos/:id/reporte             Pantalla 4 - Reporte/Exportar
-  /nna/casos/:id/resumen             Pantalla 5 - Resumen Integral
+## Migraciones v3.1 — Módulos completos (RF-002 a RF-010)
+
+Ejecutar después de los pasos anteriores:
+
+    psql -U postgres -d proyecto_escom -f migrations/create_full_v2.sql
+    psql -U postgres -d proyecto_escom -f migrations/seed_full.sql
+
+Nuevas dependencias Python (instalar):
+
+    pip install reportlab==4.2.2 openpyxl==3.1.4
+
+## Módulos implementados en v3.1
+
+| Módulo | RF | Descripción |
+|---|---|---|
+| Tutor NNA | RF-002 | Datos del tutor/responsable legal |
+| Datos Médicos | RF-002 | Historial, alergias, vacunación |
+| Catálogo Derechos | RF-006 | 8 derechos + indicadores cargados |
+| Actores | RF-003/004 | CRUD + búsqueda por filtros |
+| Diagnóstico | RF-005/006/007 | 4 tipos + derechos vulnerados automáticos |
+| Planes de Restitución | RF-008/009/010 | Planes + medidas + seguimientos |
+| Auditoría | RNF-004 | AuditLog activo en servicios clave |
+| Exportación PDF | RNF-007 | Casos y diagnósticos individuales |
+| Exportación Excel | RNF-008 | Casos NNA y actores |
+| Reportes | RF-007 | Indicadores globales + evolución mensual |
+
+## Nuevas rutas frontend v3.1
+
+  /actores                           Catálogo de actores con filtros
+  /actores/nuevo                     Crear nuevo actor
+  /actores/:id                       Detalle del actor
+  /actores/:id/editar                Editar actor
+  /reportes                          Reportes e indicadores globales
+  /nna/casos/:id/diagnostico         Módulo de diagnóstico del caso
+  /nna/casos/:id/planes              Planes de restitución + seguimiento
+
+## Nuevos endpoints API v3.1
+
+  GET/POST   /api/catalogo/derechos       Catálogo de derechos
+  GET/POST   /api/catalogo/indicadores    Indicadores por derecho
+  GET/POST   /api/actores/               Actores (con filtros de búsqueda)
+  GET/POST   /api/diagnosticos/          Diagnósticos
+  GET/POST   /api/planes/               Planes de restitución
+  POST       /api/planes/medidas/:id/seguimientos
+  GET        /api/reportes/indicadores    Estadísticas globales
+  GET        /api/reportes/derechos-vulnerados
+  GET        /api/reportes/exportar/casos/pdf
+  GET        /api/reportes/exportar/casos/excel
+  GET        /api/reportes/exportar/actores/excel
+  GET        /api/nna/casos/:id/tutor    Tutor del caso
+  GET        /api/nna/casos/:id/datos-medicos
